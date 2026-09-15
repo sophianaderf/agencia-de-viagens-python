@@ -1,36 +1,48 @@
-pacotes = []
+from banco import conectar
 
 
 def cadastrar_pacote():
     nome = input("Nome do pacote: ")
     descricao = input("Descrição: ")
-    preco = float(input("Preço: "))
+    preco = float(input("Preço: R$ "))
     quantidade_dias = int(input("Quantidade de dias: "))
     id_destino = int(input("ID do destino: "))
 
-    pacote = {
-        "id": len(pacotes) + 1,
-        "nome": nome,
-        "descricao": descricao,
-        "preco": preco,
-        "quantidade_dias": quantidade_dias,
-        "id_destino": id_destino
-    }
+    conexao = conectar()
+    cursor = conexao.cursor()
 
-    pacotes.append(pacote)
+    cursor.execute("""
+        INSERT INTO pacote
+        (nome_pacote, descricao, preco, quantidade_dias, id_destino)
+        VALUES (?, ?, ?, ?, ?)
+    """, (nome, descricao, preco, quantidade_dias, id_destino))
+
+    conexao.commit()
+    conexao.close()
 
     print("Pacote cadastrado com sucesso!")
 
 
 def listar_pacotes():
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT id, nome_pacote, descricao, preco, quantidade_dias, id_destino
+        FROM pacote
+    """)
+
+    pacotes = cursor.fetchall()
+
+    conexao.close()
+
     if len(pacotes) == 0:
         print("Nenhum pacote cadastrado.")
     else:
         for pacote in pacotes:
-            print(f"\nID: {pacote['id']}")
-            print(f"Nome: {pacote['nome']}")
-            print(f"Descrição: {pacote['descricao']}")
-            print(f"Preço: R$ {pacote['preco']:.2f}")
-            print(f"Quantidade de dias: {pacote['quantidade_dias']}")
-            print(f"ID do destino: {pacote['id_destino']}")
-
+            print(f"\nID: {pacote[0]}")
+            print(f"Nome: {pacote[1]}")
+            print(f"Descrição: {pacote[2]}")
+            print(f"Preço: R$ {pacote[3]:.2f}")
+            print(f"Quantidade de dias: {pacote[4]}")
+            print(f"ID do destino: {pacote[5]}")

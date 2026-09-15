@@ -1,5 +1,12 @@
 import sqlite3
+import os
 
+caminho_banco = os.path.join(os.path.dirname(__file__), "agencia.db")
+
+conexao = sqlite3.connect(caminho_banco)
+cursor = conexao.cursor()
+
+cursor.execute("PRAGMA foreign_keys = ON")
 
 conexao = sqlite3.connect("agencia_viagens.db")
 
@@ -326,7 +333,6 @@ VALUES
 # ==========================================
 
 conexao.commit()
-
-print("Banco de dados criado e dados inseridos com sucesso!")
-
 conexao.close()
+
+print("Banco criado com sucesso!")

@@ -1,4 +1,4 @@
-reservas = []
+from banco import conectar
 
 
 def fazer_reserva():
@@ -8,29 +8,48 @@ def fazer_reserva():
     data_reserva = input("Data da reserva: ")
     quantidade_pessoas = int(input("Quantidade de pessoas: "))
 
-    reserva = {
-        "id": len(reservas) + 1,
-        "id_cliente": id_cliente,
-        "id_pacote": id_pacote,
-        "id_funcionario": id_funcionario,
-        "data_reserva": data_reserva,
-        "quantidade_pessoas": quantidade_pessoas
-    }
+    conexao = conectar()
+    cursor = conexao.cursor()
 
-    reservas.append(reserva)
+    cursor.execute("""
+        INSERT INTO reserva
+        (data_reserva, quantidade_pessoas, id_cliente, id_pacote, id_funcionario)
+        VALUES (?, ?, ?, ?, ?)
+    """, (
+        data_reserva,
+        quantidade_pessoas,
+        id_cliente,
+        id_pacote,
+        id_funcionario
+    ))
+
+    conexao.commit()
+    conexao.close()
 
     print("Reserva realizada com sucesso!")
 
 
 def listar_reservas():
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT id, data_reserva, quantidade_pessoas,
+               id_cliente, id_pacote, id_funcionario
+        FROM reserva
+    """)
+
+    reservas = cursor.fetchall()
+
+    conexao.close()
+
     if len(reservas) == 0:
         print("Nenhuma reserva cadastrada.")
     else:
         for reserva in reservas:
-            print(f"\nID: {reserva['id']}")
-            print(f"ID do cliente: {reserva['id_cliente']}")
-            print(f"ID do pacote: {reserva['id_pacote']}")
-            print(f"ID do funcionário: {reserva['id_funcionario']}")
-            print(f"Data da reserva: {reserva['data_reserva']}")
-            print(f"Quantidade de pessoas: {reserva['quantidade_pessoas']}")
-
+            print(f"\nID: {reserva[0]}")
+            print(f"Data da reserva: {reserva[1]}")
+            print(f"Quantidade de pessoas: {reserva[2]}")
+            print(f"ID do cliente: {reserva[3]}")
+            print(f"ID do pacote: {reserva[4]}")
+            print(f"ID do funcionário: {reserva[5]}")

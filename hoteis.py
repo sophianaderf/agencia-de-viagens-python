@@ -1,4 +1,4 @@
-hoteis = []
+from banco import conectar
 
 
 def cadastrar_hotel():
@@ -7,28 +7,40 @@ def cadastrar_hotel():
     telefone = input("Telefone: ")
     id_destino = int(input("ID do destino: "))
 
-    hotel = {
-        "id": len(hoteis) + 1,
-        "nome": nome,
-        "endereco": endereco,
-        "telefone": telefone,
-        "id_destino": id_destino
-    }
+    conexao = conectar()
+    cursor = conexao.cursor()
 
-    hoteis.append(hotel)
+    cursor.execute("""
+        INSERT INTO hotel
+        (nome, endereco, telefone, id_destino)
+        VALUES (?, ?, ?, ?)
+    """, (nome, endereco, telefone, id_destino))
+
+    conexao.commit()
+    conexao.close()
 
     print("Hotel cadastrado com sucesso!")
 
 
 def listar_hoteis():
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT id, nome, endereco, telefone, id_destino
+        FROM hotel
+    """)
+
+    hoteis = cursor.fetchall()
+
+    conexao.close()
+
     if len(hoteis) == 0:
         print("Nenhum hotel cadastrado.")
     else:
         for hotel in hoteis:
-            print(f"\nID: {hotel['id']}")
-            print(f"Nome: {hotel['nome']}")
-            print(f"Endereço: {hotel['endereco']}")
-            print(f"Telefone: {hotel['telefone']}")
-            print(f"ID do destino: {hotel['id_destino']}")
-
-
+            print(f"\nID: {hotel[0]}")
+            print(f"Nome: {hotel[1]}")
+            print(f"Endereço: {hotel[2]}")
+            print(f"Telefone: {hotel[3]}")
+            print(f"ID do destino: {hotel[4]}")

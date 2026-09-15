@@ -1,4 +1,4 @@
-funcionarios = []
+from banco import conectar
 
 
 def cadastrar_funcionario():
@@ -7,26 +7,40 @@ def cadastrar_funcionario():
     email = input("E-mail: ")
     telefone = input("Telefone: ")
 
-    funcionario = {
-        "id": len(funcionarios) + 1,
-        "nome": nome,
-        "cargo": cargo,
-        "email": email,
-        "telefone": telefone
-    }
+    conexao = conectar()
+    cursor = conexao.cursor()
 
-    funcionarios.append(funcionario)
+    cursor.execute("""
+        INSERT INTO funcionario
+        (nome, cargo, email, telefone)
+        VALUES (?, ?, ?, ?)
+    """, (nome, cargo, email, telefone))
+
+    conexao.commit()
+    conexao.close()
 
     print("Funcionário cadastrado com sucesso!")
 
 
 def listar_funcionarios():
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT id, nome, cargo, email, telefone
+        FROM funcionario
+    """)
+
+    funcionarios = cursor.fetchall()
+
+    conexao.close()
+
     if len(funcionarios) == 0:
         print("Nenhum funcionário cadastrado.")
     else:
         for funcionario in funcionarios:
-            print(f"\nID: {funcionario['id']}")
-            print(f"Nome: {funcionario['nome']}")
-            print(f"Cargo: {funcionario['cargo']}")
-            print(f"E-mail: {funcionario['email']}")
-            print(f"Telefone: {funcionario['telefone']}")
+            print(f"\nID: {funcionario[0]}")
+            print(f"Nome: {funcionario[1]}")
+            print(f"Cargo: {funcionario[2]}")
+            print(f"E-mail: {funcionario[3]}")
+            print(f"Telefone: {funcionario[4]}")

@@ -1,4 +1,4 @@
-pagamentos = []
+from banco import conectar
 
 
 def registrar_pagamento():
@@ -11,18 +11,26 @@ def registrar_pagamento():
 
     valor_parcela = valor_total / quantidade_parcelas
 
-    pagamento = {
-        "id": len(pagamentos) + 1,
-        "valor_total": valor_total,
-        "forma_pagamento": forma_pagamento,
-        "quantidade_parcelas": quantidade_parcelas,
-        "valor_parcela": valor_parcela,
-        "data_pagamento": data_pagamento,
-        "status": status,
-        "id_reserva": id_reserva
-    }
+    conexao = conectar()
+    cursor = conexao.cursor()
 
-    pagamentos.append(pagamento)
+    cursor.execute("""
+        INSERT INTO pagamento
+        (valor_total, forma_pagamento, quantidade_parcelas,
+         valor_parcela, data_pagamento, status, id_reserva)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (
+        valor_total,
+        forma_pagamento,
+        quantidade_parcelas,
+        valor_parcela,
+        data_pagamento,
+        status,
+        id_reserva
+    ))
+
+    conexao.commit()
+    conexao.close()
 
     print("Pagamento registrado com sucesso!")
     print(f"Valor total: R$ {valor_total:.2f}")
@@ -31,15 +39,29 @@ def registrar_pagamento():
 
 
 def listar_pagamentos():
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT id, valor_total, forma_pagamento,
+               quantidade_parcelas, valor_parcela,
+               data_pagamento, status, id_reserva
+        FROM pagamento
+    """)
+
+    pagamentos = cursor.fetchall()
+
+    conexao.close()
+
     if len(pagamentos) == 0:
         print("Nenhum pagamento cadastrado.")
     else:
         for pagamento in pagamentos:
-            print(f"\nID: {pagamento['id']}")
-            print(f"Valor total: R$ {pagamento['valor_total']:.2f}")
-            print(f"Forma de pagamento: {pagamento['forma_pagamento']}")
-            print(f"Quantidade de parcelas: {pagamento['quantidade_parcelas']}")
-            print(f"Valor da parcela: R$ {pagamento['valor_parcela']:.2f}")
-            print(f"Data do pagamento: {pagamento['data_pagamento']}")
-            print(f"Status: {pagamento['status']}")
-            print(f"ID da reserva: {pagamento['id_reserva']}")
+            print(f"\nID: {pagamento[0]}")
+            print(f"Valor total: R$ {pagamento[1]:.2f}")
+            print(f"Forma de pagamento: {pagamento[2]}")
+            print(f"Quantidade de parcelas: {pagamento[3]}")
+            print(f"Valor da parcela: R$ {pagamento[4]:.2f}")
+            print(f"Data do pagamento: {pagamento[5]}")
+            print(f"Status: {pagamento[6]}")
+            print(f"ID da reserva: {pagamento[7]}")
