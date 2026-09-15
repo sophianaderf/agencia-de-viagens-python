@@ -33,3 +33,4 @@ def listar_reservas():
             print(f"ID do funcionário: {reserva['id_funcionario']}")
             print(f"Data da reserva: {reserva['data_reserva']}")
             print(f"Quantidade de pessoas: {reserva['quantidade_pessoas']}")
+

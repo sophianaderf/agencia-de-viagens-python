@@ -33,3 +33,4 @@ def listar_pacotes():
             print(f"Preço: R$ {pacote['preco']:.2f}")
             print(f"Quantidade de dias: {pacote['quantidade_dias']}")
             print(f"ID do destino: {pacote['id_destino']}")
+

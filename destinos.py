@@ -31,5 +31,3 @@ def listar_destinos():
             print(f"País: {destino['pais']}")
             print(f"Descrição: {destino['descricao']}")
 
-cadastrar_destino()
-listar_destinos()

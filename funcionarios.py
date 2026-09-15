@@ -30,6 +30,3 @@ def listar_funcionarios():
             print(f"Cargo: {funcionario['cargo']}")
             print(f"E-mail: {funcionario['email']}")
             print(f"Telefone: {funcionario['telefone']}")
-
-cadastrar_funcionario()
-listar_funcionarios()
