@@ -58,6 +58,8 @@ RF07 Registro de pagamentos - O sistema deve permitir o registro dos pagamentos 
 
 Reserva;
 Valor;
+Quantidade de parcelas;
+Valor da parcela;
 Forma de pagamento;
 Data do pagamento;
 Status do pagamento.
