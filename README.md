@@ -87,4 +87,4 @@ RT02 Banco de dados - O sistema deve utilizar obrigatoriamente o SQLite como ban
 RT03 Bibliotecas e tecnologias - A implementação do sistema deve utilizar os recursos disponíveis na linguagem Python e sua biblioteca para integração com o SQLite.
 
 ## Modelo Lógico
-![](agencia_viagem.png)
+![](agencia_viagens.png)

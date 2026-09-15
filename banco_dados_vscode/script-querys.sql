@@ -17,4 +17,4 @@ UPDATE funcionario SET cargo = 'Gerente de Vendas'
 WHERE id = 1;
 -- Deletar pagamento
 DELETE FROM pagamento
-WHERE id = 7;
+WHERE id = 8;
