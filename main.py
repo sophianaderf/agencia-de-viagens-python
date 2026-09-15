@@ -6,6 +6,10 @@ from pacotes import cadastrar_pacote, listar_pacotes
 from reservas import fazer_reserva, listar_reservas
 from pagamentos import registrar_pagamento, listar_pagamentos
 
+import sqlite3
+
+conexao = sqlite3.connect("agencia_viagens.db")
+cursor = conexao.cursor()
 
 def menu():
     while True:
