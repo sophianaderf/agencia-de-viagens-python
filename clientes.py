@@ -30,3 +30,7 @@ def listar_clientes():
             print(f"E-mail: {cliente['email']}")
             print(f"Telefone: {cliente['telefone']}")
             print(f"Data de nascimento: {cliente['data_nascimento']}")
+
+
+cadastrar_cliente()
+listar_clientes()
