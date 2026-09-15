@@ -39,8 +39,17 @@ def listar_hoteis():
         print("Nenhum hotel cadastrado.")
     else:
         for hotel in hoteis:
-            print(f"\nID: {hotel[0]}")
-            print(f"Nome: {hotel[1]}")
-            print(f"Endereço: {hotel[2]}")
-            print(f"Telefone: {hotel[3]}")
-            print(f"ID do destino: {hotel[4]}")
+
+            dados_hotel = {
+                "id": hotel[0],
+                "nome": hotel[1],
+                "endereco": hotel[2],
+                "telefone": hotel[3],
+                "id_destino": hotel[4]
+            }
+
+            print(f"\nID: {dados_hotel['id']}")
+            print(f"Nome: {dados_hotel['nome']}")
+            print(f"Endereço: {dados_hotel['endereco']}")
+            print(f"Telefone: {dados_hotel['telefone']}")
+            print(f"ID do destino: {dados_hotel['id_destino']}")

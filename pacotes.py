@@ -40,9 +40,19 @@ def listar_pacotes():
         print("Nenhum pacote cadastrado.")
     else:
         for pacote in pacotes:
-            print(f"\nID: {pacote[0]}")
-            print(f"Nome: {pacote[1]}")
-            print(f"Descrição: {pacote[2]}")
-            print(f"Preço: R$ {pacote[3]:.2f}")
-            print(f"Quantidade de dias: {pacote[4]}")
-            print(f"ID do destino: {pacote[5]}")
+
+            dados_pacote = {
+                "id": pacote[0],
+                "nome": pacote[1],
+                "descricao": pacote[2],
+                "preco": pacote[3],
+                "dias": pacote[4],
+                "id_destino": pacote[5]
+            }
+
+            print(f"\nID: {dados_pacote['id']}")
+            print(f"Nome: {dados_pacote['nome']}")
+            print(f"Descrição: {dados_pacote['descricao']}")
+            print(f"Preço: R$ {dados_pacote['preco']:.2f}")
+            print(f"Quantidade de dias: {dados_pacote['dias']}")
+            print(f"ID do destino: {dados_pacote['id_destino']}")

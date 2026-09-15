@@ -47,9 +47,19 @@ def listar_reservas():
         print("Nenhuma reserva cadastrada.")
     else:
         for reserva in reservas:
-            print(f"\nID: {reserva[0]}")
-            print(f"Data da reserva: {reserva[1]}")
-            print(f"Quantidade de pessoas: {reserva[2]}")
-            print(f"ID do cliente: {reserva[3]}")
-            print(f"ID do pacote: {reserva[4]}")
-            print(f"ID do funcionário: {reserva[5]}")
+
+            dados_reserva = {
+                "id": reserva[0],
+                "data": reserva[1],
+                "quantidade_pessoas": reserva[2],
+                "id_cliente": reserva[3],
+                "id_pacote": reserva[4],
+                "id_funcionario": reserva[5]
+            }
+
+            print(f"\nID: {dados_reserva['id']}")
+            print(f"Data da reserva: {dados_reserva['data']}")
+            print(f"Quantidade de pessoas: {dados_reserva['quantidade_pessoas']}")
+            print(f"ID do cliente: {dados_reserva['id_cliente']}")
+            print(f"ID do pacote: {dados_reserva['id_pacote']}")
+            print(f"ID do funcionário: {dados_reserva['id_funcionario']}")

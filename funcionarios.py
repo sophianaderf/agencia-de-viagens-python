@@ -39,8 +39,17 @@ def listar_funcionarios():
         print("Nenhum funcionário cadastrado.")
     else:
         for funcionario in funcionarios:
-            print(f"\nID: {funcionario[0]}")
-            print(f"Nome: {funcionario[1]}")
-            print(f"Cargo: {funcionario[2]}")
-            print(f"E-mail: {funcionario[3]}")
-            print(f"Telefone: {funcionario[4]}")
+
+            dados_funcionario = {
+                "id": funcionario[0],
+                "nome": funcionario[1],
+                "cargo": funcionario[2],
+                "email": funcionario[3],
+                "telefone": funcionario[4]
+            }
+
+            print(f"\nID: {dados_funcionario['id']}")
+            print(f"Nome: {dados_funcionario['nome']}")
+            print(f"Cargo: {dados_funcionario['cargo']}")
+            print(f"E-mail: {dados_funcionario['email']}")
+            print(f"Telefone: {dados_funcionario['telefone']}")

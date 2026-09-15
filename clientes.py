@@ -39,8 +39,17 @@ def listar_clientes():
         print("Nenhum cliente cadastrado.")
     else:
         for cliente in clientes:
-            print(f"\nID: {cliente[0]}")
-            print(f"Nome: {cliente[1]}")
-            print(f"E-mail: {cliente[2]}")
-            print(f"Telefone: {cliente[3]}")
-            print(f"Data de nascimento: {cliente[4]}")
+
+            dados_cliente = {
+                "id": cliente[0],
+                "nome": cliente[1],
+                "email": cliente[2],
+                "telefone": cliente[3],
+                "data_nascimento": cliente[4]
+            }
+
+            print(f"\nID: {dados_cliente['id']}")
+            print(f"Nome: {dados_cliente['nome']}")
+            print(f"E-mail: {dados_cliente['email']}")
+            print(f"Telefone: {dados_cliente['telefone']}")
+            print(f"Data de nascimento: {dados_cliente['data_nascimento']}")

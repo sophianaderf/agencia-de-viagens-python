@@ -39,8 +39,17 @@ def listar_destinos():
         print("Nenhum destino cadastrado.")
     else:
         for destino in destinos:
-            print(f"\nID: {destino[0]}")
-            print(f"Cidade: {destino[1]}")
-            print(f"Estado: {destino[2]}")
-            print(f"País: {destino[3]}")
-            print(f"Descrição: {destino[4]}")
+
+            dados_destino = {
+                "id": destino[0],
+                "cidade": destino[1],
+                "estado": destino[2],
+                "pais": destino[3],
+                "descricao": destino[4]
+            }
+
+            print(f"\nID: {dados_destino['id']}")
+            print(f"Cidade: {dados_destino['cidade']}")
+            print(f"Estado: {dados_destino['estado']}")
+            print(f"País: {dados_destino['pais']}")
+            print(f"Descrição: {dados_destino['descricao']}")

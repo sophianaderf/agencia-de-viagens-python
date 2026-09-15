@@ -57,11 +57,23 @@ def listar_pagamentos():
         print("Nenhum pagamento cadastrado.")
     else:
         for pagamento in pagamentos:
-            print(f"\nID: {pagamento[0]}")
-            print(f"Valor total: R$ {pagamento[1]:.2f}")
-            print(f"Forma de pagamento: {pagamento[2]}")
-            print(f"Quantidade de parcelas: {pagamento[3]}")
-            print(f"Valor da parcela: R$ {pagamento[4]:.2f}")
-            print(f"Data do pagamento: {pagamento[5]}")
-            print(f"Status: {pagamento[6]}")
-            print(f"ID da reserva: {pagamento[7]}")
+
+            dados_pagamento = {
+                "id": pagamento[0],
+                "valor_total": pagamento[1],
+                "forma_pagamento": pagamento[2],
+                "quantidade_parcelas": pagamento[3],
+                "valor_parcela": pagamento[4],
+                "data_pagamento": pagamento[5],
+                "status": pagamento[6],
+                "id_reserva": pagamento[7]
+            }
+
+            print(f"\nID: {dados_pagamento['id']}")
+            print(f"Valor total: R$ {dados_pagamento['valor_total']:.2f}")
+            print(f"Forma de pagamento: {dados_pagamento['forma_pagamento']}")
+            print(f"Quantidade de parcelas: {dados_pagamento['quantidade_parcelas']}")
+            print(f"Valor da parcela: R$ {dados_pagamento['valor_parcela']:.2f}")
+            print(f"Data do pagamento: {dados_pagamento['data_pagamento']}")
+            print(f"Status: {dados_pagamento['status']}")
+            print(f"ID da reserva: {dados_pagamento['id_reserva']}")
