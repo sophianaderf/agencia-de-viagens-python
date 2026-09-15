@@ -9,7 +9,7 @@ from pagamentos import registrar_pagamento, listar_pagamentos
 
 def menu():
     while True:
-        print("\n===== AGÊNCIA DE V3IAGENS =====")
+        print("\n===== AGÊNCIA DE VIAGENS =====")
         print("1 - Cadastrar cliente")
         print("2 - Listar clientes")
         print("3 - Cadastrar funcionário")
