@@ -85,3 +85,7 @@ RT01 Linguagem de programação - O sistema deve ser desenvolvido utilizando obr
 RT02 Banco de dados - O sistema deve utilizar obrigatoriamente o SQLite como banco de dados para armazenamento persistente das informações.
 
 RT03 Bibliotecas e tecnologias - A implementação do sistema deve utilizar os recursos disponíveis na linguagem Python e sua biblioteca para integração com o SQLite.
+
+
+## Modelo Lógico
+![](agencia_viagem.png)
