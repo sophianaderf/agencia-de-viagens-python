@@ -1,5 +1,3 @@
-import banco
-
 from clientes import cadastrar_cliente, listar_clientes
 from funcionarios import cadastrar_funcionario, listar_funcionarios
 from destinos import cadastrar_destino, listar_destinos
@@ -7,6 +5,15 @@ from hoteis import cadastrar_hotel, listar_hoteis
 from pacotes import cadastrar_pacote, listar_pacotes
 from reservas import fazer_reserva, listar_reservas
 from pagamentos import registrar_pagamento, listar_pagamentos
+
+from consultas import (
+    mostrar_tabelas,
+    informacoes_clientes,
+    pacotes_caros,
+    atualizar_funcionario,
+    deletar_pagamento
+)
+
 
 def menu():
     while True:
@@ -25,6 +32,11 @@ def menu():
         print("12 - Listar reservas")
         print("13 - Registrar pagamento")
         print("14 - Listar pagamentos")
+        print("15 - Mostrar todas as tabelas")
+        print("16 - Informações dos clientes")
+        print("17 - Pacotes acima de R$ 3.000")
+        print("18 - Atualizar funcionário")
+        print("19 - Deletar pagamento")
         print("0 - Sair")
 
         opcao = input("Escolha uma opção: ")
@@ -70,6 +82,21 @@ def menu():
 
         elif opcao == "14":
             listar_pagamentos()
+
+        elif opcao == "15":
+            mostrar_tabelas()
+
+        elif opcao == "16":
+            informacoes_clientes()
+
+        elif opcao == "17":
+            pacotes_caros()
+
+        elif opcao == "18":
+            atualizar_funcionario()
+
+        elif opcao == "19":
+            deletar_pagamento()
 
         elif opcao == "0":
             print("Sistema encerrado!")
