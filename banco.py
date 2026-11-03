@@ -1,12 +1,10 @@
-import sqlite3
-import os
-
+import psycopg
 
 def conectar():
-    caminho_banco = os.path.join(
-        os.path.dirname(__file__),
-        "banco-de-dados",
-        "agencia_viagens.db"
+    return psycopg.connect(
+        dbname="agencia_viagens",
+        user="postgres",            # O seu utilizador do PostgreSQL
+        password="1234",  # <-- Substitua pela sua palavra-passe real do PostgreSQL
+        host="localhost",
+        port="5432"
     )
-
-    return sqlite3.connect(caminho_banco)

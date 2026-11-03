@@ -1,15 +1,9 @@
 import sqlite3
 import os
 
-caminho_banco = os.path.join(os.path.dirname(__file__), "agencia.db")
+caminho_banco = os.path.join(os.path.dirname(__file__), "agencia_viagens.db")
 
 conexao = sqlite3.connect(caminho_banco)
-cursor = conexao.cursor()
-
-cursor.execute("PRAGMA foreign_keys = ON")
-
-conexao = sqlite3.connect("agencia_viagens.db")
-
 cursor = conexao.cursor()
 
 cursor.execute("PRAGMA foreign_keys = ON")
