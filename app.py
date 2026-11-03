@@ -84,5 +84,8 @@ def pagamentos():
         lista_pagamentos = cursor.fetchall()
     return render_template('pagamentos.html', pagamentos=lista_pagamentos)
 
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+
