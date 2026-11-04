@@ -1,4 +1,4 @@
-from banco import conectar
+from database import conectar
 
 
 def cadastrar_funcionario():
