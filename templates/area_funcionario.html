@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block title %}Área do Funcionário - Travel{% endblock %}
+
+{% block content %}
+<section class="admin-page">
+    <div class="admin-heading">
+        <div>
+            <p class="section-kicker">Operações internas</p>
+            <h1>Área do funcionário</h1>
+        </div>
+        <span>Banco: agencia_viagens_v2</span>
+    </div>
+
+    <section class="admin-section" id="clientes">
+        <div class="admin-section-heading">
+            <h2>Clientes</h2>
+            <button class="secondary-button" type="button" onclick="abrirCadastro('form-cliente')">Novo cliente</button>
+        </div>
+        <form id="form-cliente" class="admin-form hidden-form" method="post" action="{{ url_for('novo_cliente') }}">
+            <input name="nome" required placeholder="Nome completo">
+            <input name="email" type="email" required placeholder="E-mail">
+            <input name="telefone" required placeholder="Telefone">
+            <input name="data_de_nascimento" type="date" required>
+            <button class="primary-button" type="submit">Cadastrar cliente</button>
+        </form>
+        <div class="admin-table">
+            <table>
+                <thead><tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Ação</th></tr></thead>
+                <tbody>
+                    {% for item in clientes %}
+                    <tr>
+                        <td>{{ item.id }}</td><td>{{ item.nome }}</td><td>{{ item.email }}</td><td>{{ item.telefone }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('deletar_item', tabela='cliente', item_id=item.id) }}" onsubmit="return confirm('Excluir este cliente?');">
+                                <button class="delete-button" type="submit">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}<tr><td colspan="5">Nenhum cliente cadastrado.</td></tr>{% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="admin-section" id="destinos">
+        <div class="admin-section-heading">
+            <h2>Destinos</h2>
+            <button class="secondary-button" type="button" onclick="abrirCadastro('form-destino')">Novo destino</button>
+        </div>
+        <form id="form-destino" class="admin-form hidden-form" method="post" action="{{ url_for('novo_destino') }}">
+            <input name="cidade" required placeholder="Cidade">
+            <input name="estado" required placeholder="Estado">
+            <input name="pais" required placeholder="País">
+            <input name="descricao" required placeholder="Descrição do destino">
+            <button class="primary-button" type="submit">Cadastrar destino</button>
+        </form>
+        <div class="admin-table">
+            <table>
+                <thead><tr><th>ID</th><th>Destino</th><th>Localização</th><th>Ação</th></tr></thead>
+                <tbody>
+                    {% for item in destinos %}
+                    <tr><td>{{ item.id }}</td><td>{{ item.cidade }}</td><td>{{ item.estado }} / {{ item.pais }}</td>
+                        <td><form method="post" action="{{ url_for('deletar_item', tabela='destino', item_id=item.id) }}" onsubmit="return confirm('Excluir este destino?');"><button class="delete-button" type="submit">Excluir</button></form></td>
+                    </tr>
+                    {% else %}<tr><td colspan="4">Nenhum destino cadastrado.</td></tr>{% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="admin-section" id="hoteis">
+        <div class="admin-section-heading">
+            <h2>Hotéis</h2>
+            <button class="secondary-button" type="button" onclick="abrirCadastro('form-hotel')">Novo hotel</button>
+        </div>
+        <form id="form-hotel" class="admin-form hidden-form" method="post" action="{{ url_for('novo_hotel') }}">
+            <input name="nome" required placeholder="Nome do hotel">
+            <input name="endereco" required placeholder="Endereço">
+            <input name="telefone" required placeholder="Telefone">
+            <select name="id_destino" required>
+                <option value="">Selecione o destino</option>
+                {% for destino in destinos_opcoes %}<option value="{{ destino.id }}">{{ destino.cidade }}</option>{% endfor %}
+            </select>
+            <button class="primary-button" type="submit">Cadastrar hotel</button>
+        </form>
+        <div class="admin-table">
+            <table><thead><tr><th>ID</th><th>Hotel</th><th>Destino</th><th>Ação</th></tr></thead>
+                <tbody>{% for item in hoteis %}
+                    <tr><td>{{ item.id }}</td><td>{{ item.nome }}</td><td>{{ item.cidade or '-' }}</td>
+                        <td><form method="post" action="{{ url_for('deletar_item', tabela='hotel', item_id=item.id) }}" onsubmit="return confirm('Excluir este hotel?');"><button class="delete-button" type="submit">Excluir</button></form></td>
+                    </tr>{% else %}<tr><td colspan="4">Nenhum hotel cadastrado.</td></tr>{% endfor %}</tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="admin-section" id="pacotes">
+        <div class="admin-section-heading">
+            <h2>Pacotes</h2>
+            <button class="secondary-button" type="button" onclick="abrirCadastro('form-pacote')">Novo pacote</button>
+        </div>
+        <form id="form-pacote" class="admin-form hidden-form" method="post" action="{{ url_for('novo_pacote') }}">
+            <input name="nome_pacote" required placeholder="Nome do pacote">
+            <input name="descricao" required placeholder="Descrição">
+            <input name="preco" type="number" step="0.01" required placeholder="Preço">
+            <input name="quantidade_dias" type="number" min="1" required placeholder="Quantidade de dias">
+            <select name="id_destino" required>
+                <option value="">Selecione o destino</option>
+                {% for destino in destinos_opcoes %}<option value="{{ destino.id }}">{{ destino.cidade }}</option>{% endfor %}
+            </select>
+            <button class="primary-button" type="submit">Cadastrar pacote</button>
+        </form>
+        <div class="admin-table">
+            <table><thead><tr><th>ID</th><th>Pacote</th><th>Destino</th><th>Preço</th><th>Ação</th></tr></thead>
+                <tbody>{% for item in pacotes %}
+                    <tr><td>{{ item.id }}</td><td>{{ item.nome_pacote }}</td><td>{{ item.destino or '-' }}</td><td>R$ {{ item.preco }}</td>
+                        <td><form method="post" action="{{ url_for('deletar_item', tabela='pacote', item_id=item.id) }}" onsubmit="return confirm('Excluir este pacote?');"><button class="delete-button" type="submit">Excluir</button></form></td>
+                    </tr>{% else %}<tr><td colspan="5">Nenhum pacote cadastrado.</td></tr>{% endfor %}</tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="admin-section" id="reservas">
+        <div class="admin-section-heading">
+            <h2>Reservas</h2>
+            <button class="secondary-button" type="button" onclick="abrirCadastro('form-reserva')">Nova reserva</button>
+        </div>
+        <form id="form-reserva" class="admin-form hidden-form" method="post" action="{{ url_for('nova_reserva') }}">
+            <input name="data_reserva" type="date" required>
+            <input name="quantidade_pessoas" type="number" min="1" required placeholder="Quantidade de pessoas">
+            <select name="id_cliente" required><option value="">Cliente</option>{% for cliente in clientes_opcoes %}<option value="{{ cliente.id }}">{{ cliente.nome }}</option>{% endfor %}</select>
+            <select name="id_pacote" required><option value="">Pacote</option>{% for pacote in pacotes_opcoes %}<option value="{{ pacote.id }}">{{ pacote.nome_pacote }}</option>{% endfor %}</select>
+            <select name="id_funcionario" required><option value="">Funcionário responsável</option>{% for funcionario in funcionarios_opcoes %}<option value="{{ funcionario.id }}">{{ funcionario.nome }}</option>{% endfor %}</select>
+            <button class="primary-button" type="submit">Realizar reserva</button>
+        </form>
+        <div class="admin-table">
+            <table><thead><tr><th>ID</th><th>Cliente</th><th>Pacote</th><th>Responsável</th><th>Ação</th></tr></thead>
+                <tbody>{% for item in reservas %}
+                    <tr><td>{{ item.id }}</td><td>{{ item.cliente_nome }}</td><td>{{ item.nome_pacote }}</td><td>{{ item.func_nome }}</td>
+                        <td><form method="post" action="{{ url_for('deletar_item', tabela='reserva', item_id=item.id) }}" onsubmit="return confirm('Excluir esta reserva?');"><button class="delete-button" type="submit">Excluir</button></form></td>
+                    </tr>{% else %}<tr><td colspan="5">Nenhuma reserva cadastrada.</td></tr>{% endfor %}</tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="admin-section" id="pagamentos">
+        <div class="admin-section-heading">
+            <h2>Pagamentos</h2>
+            <button class="secondary-button" type="button" onclick="abrirCadastro('form-pagamento')">Registrar pagamento</button>
+        </div>
+        <form id="form-pagamento" class="admin-form hidden-form" method="post" action="{{ url_for('novo_pagamento') }}">
+            <select name="id_reserva" required><option value="">Reserva</option>{% for reserva in reservas_opcoes %}<option value="{{ reserva.id }}">#{{ reserva.id }} - {{ reserva.cliente }}</option>{% endfor %}</select>
+            <input name="valor_total" type="number" step="0.01" required placeholder="Valor total">
+            <select name="forma_pagamento" required><option>Cartão</option><option>Pix</option><option>Dinheiro</option><option>Boleto</option></select>
+            <input name="quantidade_parcelas" type="number" min="1" required placeholder="Parcelas">
+            <input name="data_pagamento" type="date" required>
+            <select name="status" required><option>Pendente</option><option>Pago</option><option>Cancelado</option></select>
+            <button class="primary-button" type="submit">Registrar pagamento</button>
+        </form>
+        <div class="admin-table">
+            <table><thead><tr><th>ID</th><th>Reserva</th><th>Valor</th><th>Forma</th><th>Status</th><th>Ação</th></tr></thead>
+                <tbody>{% for item in pagamentos %}
+                    <tr><td>{{ item.id }}</td><td>#{{ item.id_reserva }}</td><td>R$ {{ item.valor_total }}</td><td>{{ item.forma_pagamento }}</td>
+                        <td>
+                            <form class="status-form" method="post" action="{{ url_for('atualizar_status_pagamento', item_id=item.id) }}">
+                                <select name="status" onchange="this.form.submit()">
+                                    <option {% if item.status == 'Pendente' %}selected{% endif %}>Pendente</option>
+                                    <option {% if item.status == 'Pago' %}selected{% endif %}>Pago</option>
+                                    <option {% if item.status == 'Cancelado' %}selected{% endif %}>Cancelado</option>
+                                </select>
+                            </form>
+                        </td>
+                        <td><form method="post" action="{{ url_for('deletar_item', tabela='pagamento', item_id=item.id) }}" onsubmit="return confirm('Excluir este pagamento?');"><button class="delete-button" type="submit">Excluir</button></form></td>
+                    </tr>{% else %}<tr><td colspan="6">Nenhum pagamento registrado.</td></tr>{% endfor %}</tbody>
+            </table>
+        </div>
+    </section>
+</section>
+
+<script>
+function abrirCadastro(id) {
+    const form = document.getElementById(id);
+    form.classList.toggle('hidden-form');
+    if (!form.classList.contains('hidden-form')) form.querySelector('input, select')?.focus();
+}
+</script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Pacotes de Viagem</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Pacote</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Duração</th>
+                    <th>Destino</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pacotes %}
+                <tr>
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.nome_pacote }}</td>
+                    <td>{{ p.descricao }}</td>
+                    <td>R$ {{ "%.2f"|format(p.preco) }}</td>
+                    <td>{{ p.quantidade_dias }} dias</td>
+                    <td>{{ p.destino or 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

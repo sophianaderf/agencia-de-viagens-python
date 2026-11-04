@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}Início - Agência de Viagens{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="eyebrow">Sua próxima aventura começa aqui</p>
+        <h1>EXPLORE<br><span>O MUNDO</span></h1>
+        <a class="hero-link" href="{{ url_for('pacotes') }}">VER PACOTES <span>→</span></a>
+    </div>
+    <div class="hero-side">
+        <span>01</span>
+        <strong>DESCUBRA</strong>
+        <span>02</span>
+        <span>03</span>
+        <span>04</span>
+    </div>
+</section>
+
+<section class="intro-strip">
+    <article>
+        <strong>01</strong>
+        <p>Encontre destinos incríveis em todo o mundo.</p>
+    </article>
+    <article>
+        <strong>02</strong>
+        <p>Escolha pacotes preparados para cada viagem.</p>
+    </article>
+    <article>
+        <strong>03</strong>
+        <p>Viaje com conforto, segurança e planejamento.</p>
+    </article>
+</section>
+
+<section class="recommendations">
+    <p class="section-kicker">CONFIRA NOSSAS</p>
+    <h2>Recomendações de destinos</h2>
+    <div class="destination-grid">
+        {% for destino in destinos %}
+        <a class="destination-card destination-card-{{ loop.index }}" href="{{ url_for('pacotes') }}">
+            <div class="destination-image"></div>
+            <p>{{ loop.index }}º lugar</p>
+            <h3>{{ destino.cidade }}</h3>
+            <span>{{ destino.estado }}{% if destino.pais %}, {{ destino.pais }}{% endif %}</span>
+        </a>
+        {% else %}
+        <p class="empty-message">Nenhum destino cadastrado.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="holiday-section">
+    <div class="holiday-copy">
+        <p class="eyebrow">Viaje sem preocupações</p>
+        <h2>PLANEJE SUAS<br>PRÓXIMAS FÉRIAS</h2>
+        <p>Conheça nossos pacotes, hotéis e destinos selecionados para transformar sua viagem em uma experiência inesquecível.</p>
+        <a class="outline-button" href="{{ url_for('pacotes') }}">Escolher um pacote</a>
+    </div>
+    <div class="holiday-gallery">
+        {% for pacote in pacotes %}
+        <a class="package-card" href="{{ url_for('pacotes') }}">
+            <div class="package-placeholder package-{{ loop.index }}"></div>
+            <div>
+                <h3>{{ pacote.nome_pacote }}</h3>
+                <p>{{ pacote.destino or 'Destino não informado' }}</p>
+                <span>{{ pacote.quantidade_dias }} dias · R$ {{ "%.2f"|format(pacote.preco) }}</span>
+            </div>
+        </a>
+        {% else %}
+        <p class="empty-message">Nenhum pacote cadastrado.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

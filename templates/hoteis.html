@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Hotéis Cadastrados</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Hotel</th>
+                    <th>Endereço</th>
+                    <th>Telefone</th>
+                    <th>Destino (Cidade)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for h in hoteis %}
+                <tr>
+                    <td>{{ h.id }}</td>
+                    <td>{{ h.nome }}</td>
+                    <td>{{ h.endereco }}</td>
+                    <td>{{ h.telefone }}</td>
+                    <td>{{ h.cidade or 'Não associado' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

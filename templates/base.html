@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Agência de Viagens{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=7) }}">
+</head>
+<body class="{{ 'admin-body' if request.endpoint == 'area_funcionario' else '' }}">
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('index') }}" aria-label="Página inicial">
+            <span class="brand-mark"></span>
+            <span>TRAVEL</span>
+        </a>
+        <nav class="menu-navegacao" aria-label="Navegação principal">
+            <a class="{{ 'active' if request.endpoint == 'index' else '' }}" href="{{ url_for('index') }}">Início</a>
+            <a class="{{ 'active' if request.endpoint == 'destinos' else '' }}" href="{{ url_for('destinos') }}">Destinos</a>
+            <a class="{{ 'active' if request.endpoint == 'hoteis' else '' }}" href="{{ url_for('hoteis') }}">Hotéis</a>
+            <a class="{{ 'active' if request.endpoint == 'pacotes' else '' }}" href="{{ url_for('pacotes') }}">Pacotes</a>
+            <a class="{{ 'active' if request.endpoint == 'reservas' else '' }}" href="{{ url_for('reservas') }}">Reservas</a>
+            <a class="{{ 'active' if request.endpoint == 'pagamentos' else '' }}" href="{{ url_for('pagamentos') }}">Pagamentos</a>
+            <a class="{{ 'active' if request.endpoint == 'area_funcionario' else '' }}" href="{{ url_for('area_funcionario') }}">Área do funcionário</a>
+            <a href="{{ url_for('logout') }}">Sair</a>
+        </nav>
+        <button class="menu-button" type="button" aria-label="Abrir menu">☰</button>
+    </header>
+    {% if request.endpoint == 'area_funcionario' %}
+    <nav class="admin-tabs" aria-label="Seções administrativas">
+        <a href="#clientes">Clientes</a>
+        <a href="#destinos">Destinos</a>
+        <a href="#hoteis">Hotéis</a>
+        <a href="#pacotes">Pacotes</a>
+        <a href="#reservas">Reservas</a>
+        <a href="#pagamentos">Pagamentos</a>
+    </nav>
+    {% endif %}
+    <main class="container">
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% if mensagens %}
+                <div class="mensagens-flash">
+                    {% for categoria, mensagem in mensagens %}
+                        <div class="mensagem {{ categoria }}">{{ mensagem }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <script>
+        const menuButton = document.querySelector('.menu-button');
+        const menu = document.querySelector('.menu-navegacao');
+
+        if (menuButton && menu) {
+            menuButton.addEventListener('click', () => {
+                menu.classList.toggle('open');
+                menuButton.setAttribute(
+                    'aria-expanded',
+                    menu.classList.contains('open') ? 'true' : 'false'
+                );
+            });
+        }
+
+        document.querySelectorAll('.mensagens-flash .mensagem').forEach((mensagem) => {
+            window.setTimeout(() => {
+                mensagem.classList.add('mensagem-saindo');
+                window.setTimeout(() => mensagem.remove(), 300);
+            }, 4000);
+        });
+    </script>
+</body>
+</html>

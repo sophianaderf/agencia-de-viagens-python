@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Destinos Turísticos</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cidade</th>
+                    <th>Estado</th>
+                    <th>País</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in destinos %}
+                <tr>
+                    <td>{{ d.id }}</td>
+                    <td>{{ d.cidade }}</td>
+                    <td>{{ d.estado }}</td>
+                    <td>{{ d.pais }}</td>
+                    <td>{{ d.descricao }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
