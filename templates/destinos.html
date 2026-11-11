@@ -1,30 +1,26 @@
 {% extends 'base.html' %}
+{% block title %}Destinos - Agência de Viagens{% endblock %}
 {% block content %}
-<div class="card">
-    <h2>Destinos Turísticos</h2>
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Cidade</th>
-                    <th>Estado</th>
-                    <th>País</th>
-                    <th>Descrição</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for d in destinos %}
-                <tr>
-                    <td>{{ d.id }}</td>
-                    <td>{{ d.cidade }}</td>
-                    <td>{{ d.estado }}</td>
-                    <td>{{ d.pais }}</td>
-                    <td>{{ d.descricao }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<section class="card destination-listing">
+    <div class="destination-listing-heading">
+        <p class="section-kicker">LUGARES PARA DESCOBRIR</p>
+        <h1>Destinos turísticos</h1>
     </div>
-</div>
+    <div class="destination-catalog-grid">
+        {% for d in destinos %}
+        <article class="catalog-destination-card">
+            <img class="catalog-destination-image"
+                 src="{{ url_for('static', filename='images/destinos/' ~ d.imagem) }}"
+                 alt="Ilustração de {{ d.cidade }}, {{ d.pais }}" loading="lazy">
+            <div class="catalog-destination-content">
+                <p class="catalog-destination-location">{{ d.estado }}{% if d.pais %}, {{ d.pais }}{% endif %}</p>
+                <h2>{{ d.cidade }}</h2>
+                <p class="catalog-destination-description">{{ d.descricao or 'Um destino esperando para ser descoberto.' }}</p>
+            </div>
+        </article>
+        {% else %}
+        <p class="empty-message">Nenhum destino cadastrado.</p>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

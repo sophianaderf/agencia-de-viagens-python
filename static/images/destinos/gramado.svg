@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540">
+  <defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#a8cad5"/><stop offset="1" stop-color="#f1dfbd"/></linearGradient></defs>
+  <path fill="url(#sky)" d="M0 0h900v540H0z"/><circle cx="734" cy="100" r="42" fill="#fff0c7"/>
+  <path fill="#78998c" d="M0 310q173-77 321 2t285-7 294 5v230H0z"/><path fill="#476e5f" d="M0 385q162-81 312 4t296-1 292-11v163H0z"/>
+  <path fill="#e9d8b7" d="M245 265h419v203H245z"/><path fill="#654e43" d="m215 281 239-143 237 143z"/><path fill="#876345" d="M424 165h62v91h-62z"/>
+  <path fill="#3c5454" d="M277 302h75v87h-75zm102 0h75v87h-75zm102 0h75v87h-75zm102 0h48v87h-48z"/><path fill="#b9d0c8" d="M290 315h49v58h-49zm102 0h49v58h-49zm102 0h49v58h-49z"/>
+  <path fill="#74563f" d="M421 378h70v90h-70z"/><path fill="#f5eee0" d="M225 463h461v17H225z"/>
+  <g fill="#28483f"><path d="m96 408 51-171 52 171zm-47 0 98-117 98 117zm518 0 52-172 53 172zm-48 0 100-120 102 120zm185 0 49-155 48 155zm-42 0 92-105 91 105z"/></g>
+</svg>

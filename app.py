@@ -1,5 +1,6 @@
 import hmac
 import os
+import unicodedata
 
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 import psycopg
@@ -155,6 +156,28 @@ def destinos():
         "SELECT id, cidade, estado, pais, descricao "
         "FROM destino ORDER BY id DESC"
     )
+    imagens_por_cidade = {
+        "rio de janeiro": "rio-de-janeiro.svg",
+        "salvador": "salvador.svg",
+        "gramado": "gramado.svg",
+        "foz do iguacu": "foz-do-iguacu.svg",
+        "florianopolis": "praias.svg",
+        "natal": "praias.svg",
+        "maceio": "praias.svg",
+        "recife": "recife.svg",
+        "sao paulo": "sao-paulo.svg",
+        "belo horizonte": "belo-horizonte.svg",
+        "buenos aires": "buenos-aires.svg",
+        "santiago": "santiago.svg",
+        "lisboa": "lisboa.svg",
+        "paris": "paris.svg",
+        "nova york": "nova-york.svg",
+    }
+    for destino in registros:
+        cidade = unicodedata.normalize(
+            "NFKD", str(destino["cidade"] or "").casefold()
+        ).encode("ascii", "ignore").decode("ascii")
+        destino["imagem"] = imagens_por_cidade.get(cidade, "outros-destinos.svg")
     return render_template("destinos.html", destinos=registros)
 
 

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop stop-color="#f6bf8c"/>
+      <stop offset="1" stop-color="#f3e0b4"/>
+    </linearGradient>
+    <linearGradient id="sea" x2="0" y2="1">
+      <stop stop-color="#4ca7ad"/>
+      <stop offset="1" stop-color="#155b70"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h900v310H0z"/>
+  <circle cx="690" cy="145" r="58" fill="#ffe4a3"/>
+  <path fill="#f3e0b4" d="M0 256q220-28 430 0t470 0v52H0z"/>
+  <path fill="url(#sea)" d="M0 284q230-17 450 3t450-3v253H0z"/>
+  <path fill="none" stroke="#a9dad0" stroke-width="8" d="M0 344q140-19 280 0t280 0 340 0M0 415q180-17 360 0t360 0 180 0"/>
+  <path fill="#e8c99a" d="M0 462q200-24 380 8t520-11v81H0z"/>
+  <path fill="#f8f2e4" d="M92 271h390v142H92z"/>
+  <path fill="#d9aa77" d="M72 271 287 168l215 103z"/>
+  <path fill="#253b48" d="M122 295h66v118h-66zm94 0h66v118h-66zm94 0h66v118h-66zm94 0h48v118h-48z"/>
+  <path fill="#b9d1c9" d="M136 308h38v54h-38zm94 0h38v54h-38zm94 0h38v54h-38zm94 0h22v54h-22z"/>
+  <path fill="#d6b17c" d="M52 413h482v18H52z"/>
+  <path fill="#385a4b" d="M604 311q-7-104 18-174 26 70 19 174z"/>
+  <path fill="#47755b" d="M620 198q-93-57-145-27 56 7 125 48-86-1-125 42 79-16 151-4 61-52 135-61-65-17-141 25 36-58 110-93-72 3-139 70z"/>
+</svg>

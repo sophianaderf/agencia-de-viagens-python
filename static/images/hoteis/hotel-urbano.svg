@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" role="img">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop stop-color="#a9c5d6"/>
+      <stop offset="1" stop-color="#ead9bd"/>
+    </linearGradient>
+    <linearGradient id="glass" x2="0" y2="1">
+      <stop stop-color="#274959"/>
+      <stop offset="1" stop-color="#102c3b"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h900v540H0z"/>
+  <circle cx="700" cy="115" r="51" fill="#ffe3a2"/>
+  <path fill="#d3bc9c" d="M0 339h900v201H0z"/>
+  <path fill="#829599" d="M0 311h137v229H0zm140-95h145v324H140zm570 44h190v280H710z"/>
+  <path fill="#b8c2b6" d="M28 338h78v30H28zm0 54h78v30H28zm0 54h78v30H28zm143-149h111v28H171zm0 50h111v28H171zm0 50h111v28H171zm0 50h111v28H171zm418-71h102v28H589zm0 50h102v28H589z"/>
+  <path fill="url(#glass)" d="M317 95h254v445H317z"/>
+  <path fill="#d9c6a5" d="M297 95h294v22H297z"/>
+  <path fill="#9cb8bc" d="M340 143h82v49h-82zm120 0h87v49h-87zm-120 77h82v49h-82zm120 0h87v49h-87zm-120 77h82v49h-82zm120 0h87v49h-87zm-120 77h82v49h-82zm120 0h87v49h-87z"/>
+  <path fill="#f2d89e" d="M355 159h9v18h-9zm121 0h9v18h-9zm-121 77h9v18h-9zm121 0h9v18h-9zm-121 77h9v18h-9zm121 0h9v18h-9z"/>
+  <path fill="#213b45" d="M408 424h77v116h-77z"/>
+  <path fill="#586b66" d="M0 500h900v40H0z"/>
+  <path fill="#ead7b4" d="M0 492h900v9H0z"/>
+</svg>

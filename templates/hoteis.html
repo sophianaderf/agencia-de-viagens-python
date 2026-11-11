@@ -1,30 +1,44 @@
 {% extends 'base.html' %}
+{% block title %}Hotéis - Agência de Viagens{% endblock %}
 {% block content %}
-<div class="card">
-    <h2>Hotéis Cadastrados</h2>
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Hotel</th>
-                    <th>Endereço</th>
-                    <th>Telefone</th>
-                    <th>Destino (Cidade)</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for h in hoteis %}
-                <tr>
-                    <td>{{ h.id }}</td>
-                    <td>{{ h.nome }}</td>
-                    <td>{{ h.endereco }}</td>
-                    <td>{{ h.telefone }}</td>
-                    <td>{{ h.cidade or 'Não associado' }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<section class="card hotel-listing">
+    <div class="hotel-listing-heading">
+        <p class="section-kicker">HOSPEDAGENS</p>
+        <h1>Hotéis cadastrados</h1>
     </div>
-</div>
+    <div class="hotel-grid">
+        {% for h in hoteis %}
+        {% set imagem = loop.cycle(
+            'images/hoteis/resort-litoral.svg',
+            'images/hoteis/refugio-serra.svg',
+            'images/hoteis/hotel-urbano.svg',
+            'images/hoteis/pousada-tropical.svg'
+        ) %}
+        <article class="hotel-card">
+            <img class="hotel-image" src="{{ url_for('static', filename=imagem) }}"
+                 alt="Ilustração fictícia do hotel {{ h.nome }}" loading="lazy">
+            <div class="hotel-card-content">
+                <p class="hotel-destination">{{ h.cidade or 'Destino não associado' }}</p>
+                <h2>{{ h.nome }}</h2>
+                <dl>
+                    <div>
+                        <dt>Endereço</dt>
+                        <dd>{{ h.endereco }}</dd>
+                    </div>
+                    <div>
+                        <dt>Telefone</dt>
+                        <dd>{{ h.telefone }}</dd>
+                    </div>
+                    <div>
+                        <dt>Destino</dt>
+                        <dd>{{ h.cidade or 'Não associado' }}</dd>
+                    </div>
+                </dl>
+            </div>
+        </article>
+        {% else %}
+        <p class="empty-message">Nenhum hotel cadastrado.</p>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}
