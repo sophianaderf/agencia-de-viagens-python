@@ -3,14 +3,12 @@ import os
 import psycopg
 from dotenv import load_dotenv
 
-load_dotenv(override=True)
+load_dotenv()
 
 
 def criar_conexao():
-    return psycopg.connect(
-        host=os.getenv("DB_HOST"),
-        port=os.getenv("DB_PORT"),
-        dbname=os.getenv("DB_NAME"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD"),
-    )
+    database_url = os.getenv("DATABASE_URL")
+    if not database_url:
+        raise RuntimeError("Configure a variável de ambiente DATABASE_URL.")
+
+    return psycopg.connect(database_url, connect_timeout=10)

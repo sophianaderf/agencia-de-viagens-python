@@ -8,11 +8,23 @@ from psycopg.rows import dict_row
 
 from database import criar_conexao
 
-app = Flask(__name__)
-app.secret_key = os.getenv("SESSION_SECRET", "agencia-viagens-funcionarios")
+app = Flask(
+    __name__,
+    static_folder="public/static",
+    static_url_path="/static",
+)
 
-USUARIO_FUNCIONARIO = "agenciadeviagens"
-SENHA_FUNCIONARIO = "agencia123"
+
+def obter_variavel_obrigatoria(nome):
+    valor = os.getenv(nome)
+    if not valor:
+        raise RuntimeError(f"Configure a variável de ambiente {nome}.")
+    return valor
+
+
+app.secret_key = obter_variavel_obrigatoria("SESSION_SECRET")
+USUARIO_FUNCIONARIO = obter_variavel_obrigatoria("USUARIO_FUNCIONARIO")
+SENHA_FUNCIONARIO = obter_variavel_obrigatoria("SENHA_FUNCIONARIO")
 
 
 @app.before_request
@@ -109,26 +121,21 @@ def buscar_opcoes_funcionario():
 
 @app.route("/")
 def index():
-    destinos = []
-    pacotes = []
-    try:
-        destinos = buscar_registros(
-            """
-            SELECT id, cidade, estado, pais, descricao
-            FROM destino ORDER BY id ASC LIMIT 4
-            """
-        )
-        pacotes = buscar_registros(
-            """
-            SELECT p.id, p.nome_pacote, p.descricao, p.preco,
-                   p.quantidade_dias, d.cidade AS destino
-            FROM pacote p
-            LEFT JOIN destino d ON p.id_destino = d.id
-            ORDER BY p.id ASC LIMIT 3
-            """
-        )
-    except (psycopg.Error, UnicodeDecodeError):
-        pass
+    destinos = buscar_registros(
+        """
+        SELECT id, cidade, estado, pais, descricao
+        FROM destino ORDER BY id ASC LIMIT 4
+        """
+    )
+    pacotes = buscar_registros(
+        """
+        SELECT p.id, p.nome_pacote, p.descricao, p.preco,
+               p.quantidade_dias, d.cidade AS destino
+        FROM pacote p
+        LEFT JOIN destino d ON p.id_destino = d.id
+        ORDER BY p.id ASC LIMIT 3
+        """
+    )
     return render_template("index.html", destinos=destinos, pacotes=pacotes)
 
 
@@ -568,4 +575,4 @@ def atualizar_status_pagamento(item_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.getenv("FLASK_DEBUG") == "1")
