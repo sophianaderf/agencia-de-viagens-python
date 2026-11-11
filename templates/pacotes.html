@@ -2,6 +2,19 @@
 {% block content %}
 <div class="card">
     <h2>Pacotes de Viagem</h2>
+    <form class="package-search" method="get" action="{{ url_for('pacotes') }}">
+        <input
+            type="search"
+            name="q"
+            value="{{ busca }}"
+            placeholder="Digite o nome do pacote"
+            aria-label="Pesquisar pacote pelo nome"
+        >
+        <button class="primary-button" type="submit">Pesquisar</button>
+        {% if busca %}
+        <a class="clear-search" href="{{ url_for('pacotes') }}">Limpar busca</a>
+        {% endif %}
+    </form>
     <div class="table-container">
         <table>
             <thead>
@@ -23,6 +36,16 @@
                     <td>R$ {{ "%.2f"|format(p.preco) }}</td>
                     <td>{{ p.quantidade_dias }} dias</td>
                     <td>{{ p.destino or 'N/A' }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">
+                        {% if busca %}
+                        Nenhum pacote encontrado para "{{ busca }}".
+                        {% else %}
+                        Nenhum pacote cadastrado.
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

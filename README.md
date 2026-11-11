@@ -64,9 +64,11 @@ Forma de pagamento;
 Data do pagamento;
 Status do pagamento.
 
-RF08- Visualização dos dados - O sistema deve permitir que o usuário visualize os registros cadastrados de clientes, funcionários, destinos, hotéis, pacotes, reservas e pagamentos.
+RF08- Visualização dos dados - O sistema deve permitir que o usuário visualize os registros cadastrados de clientes, funcionários, destinos, hotéis, pacotes, reservas e pagamentos. Deve ser possível pesquisar registros na página de pacotes e nas tabelas da área do funcionário.
 
 RF09- Menu de navegação - O sistema deve disponibilizar um menu principal para facilitar o acesso às funcionalidades de cadastro e visualização dos dados.
+
+RF10- Edição de registros - Na área do funcionário, o sistema deve permitir editar os dados cadastrados de clientes, destinos, hotéis, pacotes, reservas e pagamentos.
 
 ## Requisitos Não Funcionais (RNF)
 

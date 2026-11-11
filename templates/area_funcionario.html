@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <section class="admin-section" id="clientes">
+    <section class="admin-section" id="clientes" data-searchable-section>
         <div class="admin-section-heading">
             <h2>Clientes</h2>
             <button class="secondary-button" type="button" onclick="abrirCadastro('form-cliente')">Novo cliente</button>
@@ -23,26 +23,41 @@
             <input name="data_de_nascimento" type="date" required>
             <button class="primary-button" type="submit">Cadastrar cliente</button>
         </form>
+        <input class="admin-search" type="search" placeholder="Pesquisar clientes..." aria-label="Pesquisar clientes">
         <div class="admin-table">
             <table>
-                <thead><tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Ação</th></tr></thead>
+                <thead>
+                    <tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Telefone</th><th class="record-actions-heading">Ações</th></tr>
+                </thead>
                 <tbody>
                     {% for item in clientes %}
-                    <tr>
+                    <tr data-search-row>
                         <td>{{ item.id }}</td><td>{{ item.nome }}</td><td>{{ item.email }}</td><td>{{ item.telefone }}</td>
-                        <td>
-                            <form method="post" action="{{ url_for('deletar_item', tabela='cliente', item_id=item.id) }}" onsubmit="return confirm('Excluir este cliente?');">
-                                <button class="delete-button" type="submit">Excluir</button>
-                            </form>
+                        <td class="record-actions-cell">
+                            <div class="record-actions">
+                                <details class="record-edit">
+                                    <summary class="secondary-button">Editar</summary>
+                                    <form class="record-edit-form" method="post" action="{{ url_for('editar_cliente', item_id=item.id) }}">
+                                    <input name="nome" value="{{ item.nome }}" required placeholder="Nome completo" aria-label="Nome completo">
+                                    <input name="email" type="email" value="{{ item.email }}" required placeholder="E-mail" aria-label="E-mail">
+                                    <input name="telefone" value="{{ item.telefone }}" required placeholder="Telefone" aria-label="Telefone">
+                                    <input name="data_de_nascimento" type="date" value="{{ item.data_de_nascimento.strftime('%Y-%m-%d') }}" required aria-label="Data de nascimento">
+                                    <button class="primary-button" type="submit">Salvar alterações</button>
+                                    </form>
+                                </details>
+                                <form method="post" action="{{ url_for('deletar_item', tabela='cliente', item_id=item.id) }}" onsubmit="return confirm('Excluir este cliente?');">
+                                    <button class="delete-button" type="submit">Excluir</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
-                    {% else %}<tr><td colspan="5">Nenhum cliente cadastrado.</td></tr>{% endfor %}
+                    {% else %}<tr data-empty-state><td colspan="5">Nenhum cliente cadastrado.</td></tr>{% endfor %}
                 </tbody>
             </table>
         </div>
     </section>
 
-    <section class="admin-section" id="destinos">
+    <section class="admin-section" id="destinos" data-searchable-section>
         <div class="admin-section-heading">
             <h2>Destinos</h2>
             <button class="secondary-button" type="button" onclick="abrirCadastro('form-destino')">Novo destino</button>
@@ -54,21 +69,36 @@
             <input name="descricao" required placeholder="Descrição do destino">
             <button class="primary-button" type="submit">Cadastrar destino</button>
         </form>
+        <input class="admin-search" type="search" placeholder="Pesquisar destinos..." aria-label="Pesquisar destinos">
         <div class="admin-table">
             <table>
-                <thead><tr><th>ID</th><th>Destino</th><th>Localização</th><th>Ação</th></tr></thead>
+                <thead><tr><th>ID</th><th>Destino</th><th>Localização</th><th class="record-actions-heading">Ações</th></tr></thead>
                 <tbody>
                     {% for item in destinos %}
-                    <tr><td>{{ item.id }}</td><td>{{ item.cidade }}</td><td>{{ item.estado }} / {{ item.pais }}</td>
-                        <td><form method="post" action="{{ url_for('deletar_item', tabela='destino', item_id=item.id) }}" onsubmit="return confirm('Excluir este destino?');"><button class="delete-button" type="submit">Excluir</button></form></td>
+                    <tr data-search-row><td>{{ item.id }}</td><td>{{ item.cidade }}</td><td>{{ item.estado }} / {{ item.pais }}</td>
+                        <td class="record-actions-cell">
+                            <div class="record-actions">
+                                <details class="record-edit">
+                                    <summary class="secondary-button">Editar</summary>
+                                    <form class="record-edit-form" method="post" action="{{ url_for('editar_destino', item_id=item.id) }}">
+                                        <input name="cidade" value="{{ item.cidade }}" required placeholder="Cidade">
+                                        <input name="estado" value="{{ item.estado }}" required placeholder="Estado">
+                                        <input name="pais" value="{{ item.pais }}" required placeholder="País">
+                                        <input name="descricao" value="{{ item.descricao }}" required placeholder="Descrição">
+                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                    </form>
+                                </details>
+                                <form method="post" action="{{ url_for('deletar_item', tabela='destino', item_id=item.id) }}" onsubmit="return confirm('Excluir este destino?');"><button class="delete-button" type="submit">Excluir</button></form>
+                            </div>
+                        </td>
                     </tr>
-                    {% else %}<tr><td colspan="4">Nenhum destino cadastrado.</td></tr>{% endfor %}
+                    {% else %}<tr data-empty-state><td colspan="4">Nenhum destino cadastrado.</td></tr>{% endfor %}
                 </tbody>
             </table>
         </div>
     </section>
 
-    <section class="admin-section" id="hoteis">
+    <section class="admin-section" id="hoteis" data-searchable-section>
         <div class="admin-section-heading">
             <h2>Hotéis</h2>
             <button class="secondary-button" type="button" onclick="abrirCadastro('form-hotel')">Novo hotel</button>
@@ -83,17 +113,35 @@
             </select>
             <button class="primary-button" type="submit">Cadastrar hotel</button>
         </form>
+        <input class="admin-search" type="search" placeholder="Pesquisar hotéis..." aria-label="Pesquisar hotéis">
         <div class="admin-table">
-            <table><thead><tr><th>ID</th><th>Hotel</th><th>Destino</th><th>Ação</th></tr></thead>
+            <table><thead><tr><th>ID</th><th>Hotel</th><th>Destino</th><th class="record-actions-heading">Ações</th></tr></thead>
                 <tbody>{% for item in hoteis %}
-                    <tr><td>{{ item.id }}</td><td>{{ item.nome }}</td><td>{{ item.cidade or '-' }}</td>
-                        <td><form method="post" action="{{ url_for('deletar_item', tabela='hotel', item_id=item.id) }}" onsubmit="return confirm('Excluir este hotel?');"><button class="delete-button" type="submit">Excluir</button></form></td>
-                    </tr>{% else %}<tr><td colspan="4">Nenhum hotel cadastrado.</td></tr>{% endfor %}</tbody>
+                    <tr data-search-row><td>{{ item.id }}</td><td>{{ item.nome }}</td><td>{{ item.cidade or '-' }}</td>
+                        <td class="record-actions-cell">
+                            <div class="record-actions">
+                                <details class="record-edit">
+                                    <summary class="secondary-button">Editar</summary>
+                                    <form class="record-edit-form" method="post" action="{{ url_for('editar_hotel', item_id=item.id) }}">
+                                        <input name="nome" value="{{ item.nome }}" required placeholder="Nome do hotel">
+                                        <input name="endereco" value="{{ item.endereco }}" required placeholder="Endereço">
+                                        <input name="telefone" value="{{ item.telefone }}" required placeholder="Telefone">
+                                        <select name="id_destino" required>
+                                            <option value="">Selecione o destino</option>
+                                            {% for destino in destinos_opcoes %}<option value="{{ destino.id }}" {% if destino.id == item.id_destino %}selected{% endif %}>{{ destino.cidade }}</option>{% endfor %}
+                                        </select>
+                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                    </form>
+                                </details>
+                                <form method="post" action="{{ url_for('deletar_item', tabela='hotel', item_id=item.id) }}" onsubmit="return confirm('Excluir este hotel?');"><button class="delete-button" type="submit">Excluir</button></form>
+                            </div>
+                        </td>
+                    </tr>{% else %}<tr data-empty-state><td colspan="4">Nenhum hotel cadastrado.</td></tr>{% endfor %}</tbody>
             </table>
         </div>
     </section>
 
-    <section class="admin-section" id="pacotes">
+    <section class="admin-section" id="pacotes" data-searchable-section>
         <div class="admin-section-heading">
             <h2>Pacotes</h2>
             <button class="secondary-button" type="button" onclick="abrirCadastro('form-pacote')">Novo pacote</button>
@@ -109,17 +157,36 @@
             </select>
             <button class="primary-button" type="submit">Cadastrar pacote</button>
         </form>
+        <input class="admin-search" type="search" placeholder="Pesquisar pacotes..." aria-label="Pesquisar pacotes">
         <div class="admin-table">
-            <table><thead><tr><th>ID</th><th>Pacote</th><th>Destino</th><th>Preço</th><th>Ação</th></tr></thead>
+            <table><thead><tr><th>ID</th><th>Pacote</th><th>Destino</th><th>Preço</th><th class="record-actions-heading">Ações</th></tr></thead>
                 <tbody>{% for item in pacotes %}
-                    <tr><td>{{ item.id }}</td><td>{{ item.nome_pacote }}</td><td>{{ item.destino or '-' }}</td><td>R$ {{ item.preco }}</td>
-                        <td><form method="post" action="{{ url_for('deletar_item', tabela='pacote', item_id=item.id) }}" onsubmit="return confirm('Excluir este pacote?');"><button class="delete-button" type="submit">Excluir</button></form></td>
-                    </tr>{% else %}<tr><td colspan="5">Nenhum pacote cadastrado.</td></tr>{% endfor %}</tbody>
+                    <tr data-search-row><td>{{ item.id }}</td><td>{{ item.nome_pacote }}</td><td>{{ item.destino or '-' }}</td><td>R$ {{ item.preco }}</td>
+                        <td class="record-actions-cell">
+                            <div class="record-actions">
+                                <details class="record-edit">
+                                    <summary class="secondary-button">Editar</summary>
+                                    <form class="record-edit-form" method="post" action="{{ url_for('editar_pacote', item_id=item.id) }}">
+                                        <input name="nome_pacote" value="{{ item.nome_pacote }}" required placeholder="Nome do pacote">
+                                        <input name="descricao" value="{{ item.descricao }}" required placeholder="Descrição">
+                                        <input name="preco" type="number" step="0.01" value="{{ item.preco }}" required placeholder="Preço">
+                                        <input name="quantidade_dias" type="number" min="1" value="{{ item.quantidade_dias }}" required placeholder="Quantidade de dias">
+                                        <select name="id_destino" required>
+                                            <option value="">Selecione o destino</option>
+                                            {% for destino in destinos_opcoes %}<option value="{{ destino.id }}" {% if destino.id == item.id_destino %}selected{% endif %}>{{ destino.cidade }}</option>{% endfor %}
+                                        </select>
+                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                    </form>
+                                </details>
+                                <form method="post" action="{{ url_for('deletar_item', tabela='pacote', item_id=item.id) }}" onsubmit="return confirm('Excluir este pacote?');"><button class="delete-button" type="submit">Excluir</button></form>
+                            </div>
+                        </td>
+                    </tr>{% else %}<tr data-empty-state><td colspan="5">Nenhum pacote cadastrado.</td></tr>{% endfor %}</tbody>
             </table>
         </div>
     </section>
 
-    <section class="admin-section" id="reservas">
+    <section class="admin-section" id="reservas" data-searchable-section>
         <div class="admin-section-heading">
             <h2>Reservas</h2>
             <button class="secondary-button" type="button" onclick="abrirCadastro('form-reserva')">Nova reserva</button>
@@ -132,17 +199,39 @@
             <select name="id_funcionario" required><option value="">Funcionário responsável</option>{% for funcionario in funcionarios_opcoes %}<option value="{{ funcionario.id }}">{{ funcionario.nome }}</option>{% endfor %}</select>
             <button class="primary-button" type="submit">Realizar reserva</button>
         </form>
+        <input class="admin-search" type="search" placeholder="Pesquisar reservas..." aria-label="Pesquisar reservas">
         <div class="admin-table">
-            <table><thead><tr><th>ID</th><th>Cliente</th><th>Pacote</th><th>Responsável</th><th>Ação</th></tr></thead>
+            <table><thead><tr><th>ID</th><th>Cliente</th><th>Pacote</th><th>Responsável</th><th class="record-actions-heading">Ações</th></tr></thead>
                 <tbody>{% for item in reservas %}
-                    <tr><td>{{ item.id }}</td><td>{{ item.cliente_nome }}</td><td>{{ item.nome_pacote }}</td><td>{{ item.func_nome }}</td>
-                        <td><form method="post" action="{{ url_for('deletar_item', tabela='reserva', item_id=item.id) }}" onsubmit="return confirm('Excluir esta reserva?');"><button class="delete-button" type="submit">Excluir</button></form></td>
-                    </tr>{% else %}<tr><td colspan="5">Nenhuma reserva cadastrada.</td></tr>{% endfor %}</tbody>
+                    <tr data-search-row><td>{{ item.id }}</td><td>{{ item.cliente_nome }}</td><td>{{ item.nome_pacote }}</td><td>{{ item.func_nome }}</td>
+                        <td class="record-actions-cell">
+                            <div class="record-actions">
+                                <details class="record-edit">
+                                    <summary class="secondary-button">Editar</summary>
+                                    <form class="record-edit-form" method="post" action="{{ url_for('editar_reserva', item_id=item.id) }}">
+                                        <input name="data_reserva" type="date" value="{{ item.data_reserva.strftime('%Y-%m-%d') }}" required>
+                                        <input name="quantidade_pessoas" type="number" min="1" value="{{ item.quantidade_pessoas }}" required placeholder="Quantidade de pessoas">
+                                        <select name="id_cliente" required>
+                                            {% for cliente in clientes_opcoes %}<option value="{{ cliente.id }}" {% if cliente.id == item.id_cliente %}selected{% endif %}>{{ cliente.nome }}</option>{% endfor %}
+                                        </select>
+                                        <select name="id_pacote" required>
+                                            {% for pacote in pacotes_opcoes %}<option value="{{ pacote.id }}" {% if pacote.id == item.id_pacote %}selected{% endif %}>{{ pacote.nome_pacote }}</option>{% endfor %}
+                                        </select>
+                                        <select name="id_funcionario" required>
+                                            {% for funcionario in funcionarios_opcoes %}<option value="{{ funcionario.id }}" {% if funcionario.id == item.id_funcionario %}selected{% endif %}>{{ funcionario.nome }}</option>{% endfor %}
+                                        </select>
+                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                    </form>
+                                </details>
+                                <form method="post" action="{{ url_for('deletar_item', tabela='reserva', item_id=item.id) }}" onsubmit="return confirm('Excluir esta reserva?');"><button class="delete-button" type="submit">Excluir</button></form>
+                            </div>
+                        </td>
+                    </tr>{% else %}<tr data-empty-state><td colspan="5">Nenhuma reserva cadastrada.</td></tr>{% endfor %}</tbody>
             </table>
         </div>
     </section>
 
-    <section class="admin-section" id="pagamentos">
+    <section class="admin-section" id="pagamentos" data-searchable-section>
         <div class="admin-section-heading">
             <h2>Pagamentos</h2>
             <button class="secondary-button" type="button" onclick="abrirCadastro('form-pagamento')">Registrar pagamento</button>
@@ -156,10 +245,11 @@
             <select name="status" required><option>Pendente</option><option>Pago</option><option>Cancelado</option></select>
             <button class="primary-button" type="submit">Registrar pagamento</button>
         </form>
+        <input class="admin-search" type="search" placeholder="Pesquisar pagamentos..." aria-label="Pesquisar pagamentos">
         <div class="admin-table">
-            <table><thead><tr><th>ID</th><th>Reserva</th><th>Valor</th><th>Forma</th><th>Status</th><th>Ação</th></tr></thead>
+            <table><thead><tr><th>ID</th><th>Reserva</th><th>Valor</th><th>Forma</th><th>Status</th><th class="record-actions-heading">Ações</th></tr></thead>
                 <tbody>{% for item in pagamentos %}
-                    <tr><td>{{ item.id }}</td><td>#{{ item.id_reserva }}</td><td>R$ {{ item.valor_total }}</td><td>{{ item.forma_pagamento }}</td>
+                    <tr data-search-row><td>{{ item.id }}</td><td>#{{ item.id_reserva }}</td><td>R$ {{ item.valor_total }}</td><td>{{ item.forma_pagamento }}</td>
                         <td>
                             <form class="status-form" method="post" action="{{ url_for('atualizar_status_pagamento', item_id=item.id) }}">
                                 <select name="status" onchange="this.form.submit()">
@@ -169,8 +259,30 @@
                                 </select>
                             </form>
                         </td>
-                        <td><form method="post" action="{{ url_for('deletar_item', tabela='pagamento', item_id=item.id) }}" onsubmit="return confirm('Excluir este pagamento?');"><button class="delete-button" type="submit">Excluir</button></form></td>
-                    </tr>{% else %}<tr><td colspan="6">Nenhum pagamento registrado.</td></tr>{% endfor %}</tbody>
+                        <td class="record-actions-cell">
+                            <div class="record-actions">
+                                <details class="record-edit">
+                                    <summary class="secondary-button">Editar</summary>
+                                    <form class="record-edit-form" method="post" action="{{ url_for('editar_pagamento', item_id=item.id) }}">
+                                        <select name="id_reserva" required>
+                                            {% for reserva in reservas_opcoes %}<option value="{{ reserva.id }}" {% if reserva.id == item.id_reserva %}selected{% endif %}>#{{ reserva.id }} - {{ reserva.cliente }}</option>{% endfor %}
+                                        </select>
+                                        <input name="valor_total" type="number" step="0.01" value="{{ item.valor_total }}" required placeholder="Valor total">
+                                        <select name="forma_pagamento" required>
+                                            {% for forma in ['Cartão', 'Pix', 'Dinheiro', 'Boleto'] %}<option {% if forma == item.forma_pagamento %}selected{% endif %}>{{ forma }}</option>{% endfor %}
+                                        </select>
+                                        <input name="quantidade_parcelas" type="number" min="1" value="{{ item.quantidade_parcelas }}" required placeholder="Parcelas">
+                                        <input name="data_pagamento" type="date" value="{{ item.data_pagamento.strftime('%Y-%m-%d') }}" required>
+                                        <select name="status" required>
+                                            {% for status in ['Pendente', 'Pago', 'Cancelado'] %}<option {% if status == item.status %}selected{% endif %}>{{ status }}</option>{% endfor %}
+                                        </select>
+                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                    </form>
+                                </details>
+                                <form method="post" action="{{ url_for('deletar_item', tabela='pagamento', item_id=item.id) }}" onsubmit="return confirm('Excluir este pagamento?');"><button class="delete-button" type="submit">Excluir</button></form>
+                            </div>
+                        </td>
+                    </tr>{% else %}<tr data-empty-state><td colspan="6">Nenhum pagamento registrado.</td></tr>{% endfor %}</tbody>
             </table>
         </div>
     </section>
@@ -182,5 +294,45 @@ function abrirCadastro(id) {
     form.classList.toggle('hidden-form');
     if (!form.classList.contains('hidden-form')) form.querySelector('input, select')?.focus();
 }
+
+document.querySelectorAll('[data-searchable-section]').forEach(section => {
+    const search = section.querySelector('.admin-search');
+    const rows = [...section.querySelectorAll('[data-search-row]')];
+    const body = section.querySelector('tbody');
+    const defaultEmptyRow = section.querySelector('[data-empty-state]');
+    const emptyRow = document.createElement('tr');
+    const emptyCell = document.createElement('td');
+
+    emptyCell.colSpan = section.querySelectorAll('thead th').length;
+    emptyCell.textContent = 'Nenhum registro corresponde à pesquisa.';
+    emptyRow.appendChild(emptyCell);
+    emptyRow.hidden = true;
+    body.appendChild(emptyRow);
+
+    search.addEventListener('input', () => {
+        const termo = search.value.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
+        let encontrados = 0;
+        if (defaultEmptyRow) defaultEmptyRow.hidden = Boolean(termo);
+
+        rows.forEach(row => {
+            const campos = [...row.querySelectorAll('input, select')].flatMap(campo => {
+                if (campo.tagName === 'SELECT') {
+                    return [campo.value, campo.selectedOptions[0]?.textContent || ''];
+                }
+                return [campo.value];
+            });
+            const celulas = [...row.cells].slice(0, -1).map(celula => {
+                const selecao = celula.querySelector('select');
+                return selecao ? selecao.selectedOptions[0]?.textContent || selecao.value : celula.textContent;
+            });
+            const texto = [...celulas, ...campos].join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase();
+            const corresponde = texto.includes(termo);
+            row.hidden = !corresponde;
+            if (corresponde) encontrados += 1;
+        });
+
+        emptyRow.hidden = !termo || encontrados > 0;
+    });
+});
 </script>
 {% endblock %}

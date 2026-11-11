@@ -196,16 +196,21 @@ def hoteis():
 
 @app.route("/pacotes")
 def pacotes():
-    registros = buscar_registros(
-        """
+    busca = request.args.get("q", "").strip()
+    query = """
         SELECT p.id, p.nome_pacote, p.descricao, p.preco,
                p.quantidade_dias, d.cidade AS destino
         FROM pacote p
         LEFT JOIN destino d ON p.id_destino = d.id
-        ORDER BY p.id DESC
-        """
-    )
-    return render_template("pacotes.html", pacotes=registros)
+    """
+    parametros = None
+    if busca:
+        query += " WHERE p.nome_pacote ILIKE %s"
+        parametros = (f"%{busca}%",)
+    query += " ORDER BY p.id DESC"
+
+    registros = buscar_registros(query, parametros)
+    return render_template("pacotes.html", pacotes=registros, busca=busca)
 
 
 @app.route("/reservas")
@@ -304,6 +309,26 @@ def novo_cliente():
     return redirect(url_for("area_funcionario"))
 
 
+@app.route("/funcionario/clientes/<int:item_id>/editar", methods=["POST"])
+def editar_cliente(item_id):
+    sucesso, erro = executar_comando(
+        """
+        UPDATE cliente
+        SET nome = %s, email = %s, telefone = %s, data_de_nascimento = %s
+        WHERE id = %s
+        """,
+        (
+            request.form["nome"].strip(),
+            request.form["email"].strip(),
+            request.form["telefone"].strip(),
+            request.form["data_de_nascimento"],
+            item_id,
+        ),
+    )
+    flash("Dados do cliente atualizados com sucesso." if sucesso else f"Não foi possível atualizar: {erro}", "sucesso" if sucesso else "erro")
+    return redirect(url_for("area_funcionario") + "#clientes")
+
+
 @app.route("/funcionario/destinos/novo", methods=["POST"])
 def novo_destino():
     sucesso, erro = executar_comando(
@@ -315,6 +340,26 @@ def novo_destino():
     )
     flash("Destino cadastrado com sucesso." if sucesso else f"Não foi possível cadastrar: {erro}", "sucesso" if sucesso else "erro")
     return redirect(url_for("area_funcionario"))
+
+
+@app.route("/funcionario/destinos/<int:item_id>/editar", methods=["POST"])
+def editar_destino(item_id):
+    sucesso, erro = executar_comando(
+        """
+        UPDATE destino
+        SET cidade = %s, estado = %s, pais = %s, descricao = %s
+        WHERE id = %s
+        """,
+        (
+            request.form["cidade"].strip(),
+            request.form["estado"].strip(),
+            request.form["pais"].strip(),
+            request.form["descricao"].strip(),
+            item_id,
+        ),
+    )
+    flash("Destino atualizado com sucesso." if sucesso else f"Não foi possível atualizar: {erro}", "sucesso" if sucesso else "erro")
+    return redirect(url_for("area_funcionario") + "#destinos")
 
 
 @app.route("/funcionario/hoteis/novo", methods=["POST"])
@@ -333,6 +378,26 @@ def novo_hotel():
     )
     flash("Hotel cadastrado com sucesso." if sucesso else f"Não foi possível cadastrar: {erro}", "sucesso" if sucesso else "erro")
     return redirect(url_for("area_funcionario"))
+
+
+@app.route("/funcionario/hoteis/<int:item_id>/editar", methods=["POST"])
+def editar_hotel(item_id):
+    sucesso, erro = executar_comando(
+        """
+        UPDATE hotel
+        SET nome = %s, endereco = %s, telefone = %s, id_destino = %s
+        WHERE id = %s
+        """,
+        (
+            request.form["nome"].strip(),
+            request.form["endereco"].strip(),
+            request.form["telefone"].strip(),
+            request.form["id_destino"],
+            item_id,
+        ),
+    )
+    flash("Hotel atualizado com sucesso." if sucesso else f"Não foi possível atualizar: {erro}", "sucesso" if sucesso else "erro")
+    return redirect(url_for("area_funcionario") + "#hoteis")
 
 
 @app.route("/funcionario/pacotes/novo", methods=["POST"])
@@ -354,6 +419,28 @@ def novo_pacote():
     return redirect(url_for("area_funcionario"))
 
 
+@app.route("/funcionario/pacotes/<int:item_id>/editar", methods=["POST"])
+def editar_pacote(item_id):
+    sucesso, erro = executar_comando(
+        """
+        UPDATE pacote
+        SET nome_pacote = %s, descricao = %s, preco = %s,
+            quantidade_dias = %s, id_destino = %s
+        WHERE id = %s
+        """,
+        (
+            request.form["nome_pacote"].strip(),
+            request.form["descricao"].strip(),
+            request.form["preco"].replace(",", "."),
+            request.form["quantidade_dias"],
+            request.form["id_destino"],
+            item_id,
+        ),
+    )
+    flash("Pacote atualizado com sucesso." if sucesso else f"Não foi possível atualizar: {erro}", "sucesso" if sucesso else "erro")
+    return redirect(url_for("area_funcionario") + "#pacotes")
+
+
 @app.route("/funcionario/reservas/nova", methods=["POST"])
 def nova_reserva():
     sucesso, erro = executar_comando(
@@ -371,6 +458,28 @@ def nova_reserva():
     )
     flash("Reserva realizada com sucesso." if sucesso else f"Não foi possível realizar: {erro}", "sucesso" if sucesso else "erro")
     return redirect(url_for("area_funcionario"))
+
+
+@app.route("/funcionario/reservas/<int:item_id>/editar", methods=["POST"])
+def editar_reserva(item_id):
+    sucesso, erro = executar_comando(
+        """
+        UPDATE reserva
+        SET data_reserva = %s, quantidade_pessoas = %s, id_cliente = %s,
+            id_pacote = %s, id_funcionario = %s
+        WHERE id = %s
+        """,
+        (
+            request.form["data_reserva"],
+            request.form["quantidade_pessoas"],
+            request.form["id_cliente"],
+            request.form["id_pacote"],
+            request.form["id_funcionario"],
+            item_id,
+        ),
+    )
+    flash("Reserva atualizada com sucesso." if sucesso else f"Não foi possível atualizar: {erro}", "sucesso" if sucesso else "erro")
+    return redirect(url_for("area_funcionario") + "#reservas")
 
 
 @app.route("/funcionario/pagamentos/novo", methods=["POST"])
@@ -396,6 +505,40 @@ def novo_pagamento():
     )
     flash("Pagamento registrado com sucesso." if sucesso else f"Não foi possível registrar: {erro}", "sucesso" if sucesso else "erro")
     return redirect(url_for("area_funcionario"))
+
+
+@app.route("/funcionario/pagamentos/<int:item_id>/editar", methods=["POST"])
+def editar_pagamento(item_id):
+    try:
+        quantidade = int(request.form["quantidade_parcelas"])
+        valor_total = float(request.form["valor_total"].replace(",", "."))
+        if quantidade < 1:
+            raise ValueError
+    except ValueError:
+        flash("Informe valores válidos para o pagamento.", "erro")
+        return redirect(url_for("area_funcionario") + "#pagamentos")
+
+    valor_parcela = round(valor_total / quantidade, 2)
+    sucesso, erro = executar_comando(
+        """
+        UPDATE pagamento
+        SET valor_total = %s, forma_pagamento = %s, quantidade_parcelas = %s,
+            valor_parcela = %s, data_pagamento = %s, status = %s, id_reserva = %s
+        WHERE id = %s
+        """,
+        (
+            valor_total,
+            request.form["forma_pagamento"],
+            quantidade,
+            valor_parcela,
+            request.form["data_pagamento"],
+            request.form["status"],
+            request.form["id_reserva"],
+            item_id,
+        ),
+    )
+    flash("Pagamento atualizado com sucesso." if sucesso else f"Não foi possível atualizar: {erro}", "sucesso" if sucesso else "erro")
+    return redirect(url_for("area_funcionario") + "#pagamentos")
 
 
 def deletar_registro(tabela, item_id):

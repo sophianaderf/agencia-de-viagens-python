@@ -1,4 +1,4 @@
-from database import conectar
+from database_sqlite import conectar
 
 
 def cadastrar_destino():

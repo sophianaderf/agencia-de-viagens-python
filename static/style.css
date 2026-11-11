@@ -563,6 +563,35 @@ body:has(.card) main.container {
     color: var(--navy);
 }
 
+.package-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.package-search input {
+    flex: 1;
+    min-width: 0;
+    height: 42px;
+    padding: 9px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.package-search .primary-button {
+    min-height: 42px;
+}
+
+.clear-search {
+    color: var(--navy);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
 .grid-filmes {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -828,13 +857,74 @@ th {
 }
 
 .secondary-button {
-    padding: 10px 14px;
+    padding: 9px 13px;
     color: var(--navy);
     background: #dcebf2;
 }
 
+.record-actions-heading {
+    width: 170px;
+    text-align: center;
+}
+
+.record-actions-cell {
+    vertical-align: top;
+}
+
+.record-actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.record-edit {
+    min-width: 76px;
+}
+
+.record-edit summary {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    list-style: none;
+}
+
+.record-edit summary::-webkit-details-marker {
+    display: none;
+}
+
+.record-edit-form {
+    width: min(320px, 75vw);
+    margin-top: 10px;
+    padding: 14px;
+    display: grid;
+    gap: 10px;
+    border: 1px solid #e1e8ed;
+    border-radius: 6px;
+    background: #f7f9fa;
+}
+
+.record-edit-form input,
+.record-edit-form select {
+    min-width: 0;
+    min-height: 38px;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    color: var(--ink);
+    background: var(--white);
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.record-edit-form .primary-button {
+    min-height: 38px;
+}
+
 .delete-button {
-    padding: 7px 9px;
+    min-height: 36px;
+    padding: 8px 12px;
     color: #991b1b;
     background: #fee2e2;
 }
@@ -868,6 +958,28 @@ th {
 
 .admin-form button {
     min-height: 42px;
+}
+
+.admin-search {
+    width: min(100%, 420px);
+    min-height: 42px;
+    margin-bottom: 14px;
+    padding: 9px 12px;
+    border: 1px solid #d5dfe6;
+    border-radius: 5px;
+    color: var(--ink);
+    background: #fbfcfd;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.admin-search:focus {
+    outline: 2px solid rgba(117, 163, 188, 0.35);
+    border-color: var(--blue);
+}
+
+.admin-section tr[hidden] {
+    display: none;
 }
 
 .admin-table {
@@ -916,6 +1028,14 @@ th {
 }
 
 @media (max-width: 650px) {
+    .package-search {
+        flex-wrap: wrap;
+    }
+
+    .package-search input {
+        flex-basis: 100%;
+    }
+
     .site-header {
         height: 68px;
     }
