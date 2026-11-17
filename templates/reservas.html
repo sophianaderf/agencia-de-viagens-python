@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="card">
-    <div class="reservas-heading">
+    <div class="page-heading">
         <h2>Reservas de Viagem</h2>
         <a class="export-button" href="{{ url_for('exportar_reservas_pdf') }}">
             Exportar relatório PDF
@@ -32,7 +32,7 @@
                 {% endfor %}
                 {% if not reservas %}
                 <tr>
-                    <td class="reservas-empty" colspan="6">Nenhuma reserva cadastrada.</td>
+                    <td class="table-empty" colspan="6">Nenhuma reserva cadastrada.</td>
                 </tr>
                 {% endif %}
             </tbody>

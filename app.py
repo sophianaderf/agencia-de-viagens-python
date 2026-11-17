@@ -15,7 +15,7 @@ from flask import (
 import psycopg
 from psycopg.rows import dict_row
 
-from create_pdf import criar_pdf
+from create_pdf import criar_pdf, criar_pdf_pagamentos
 from database import criar_conexao
 
 app = Flask(
@@ -144,6 +144,17 @@ def buscar_reservas():
     )
 
 
+def buscar_pagamentos():
+    return buscar_registros(
+        """
+        SELECT id, valor_total, forma_pagamento, quantidade_parcelas,
+               valor_parcela, data_pagamento, status, id_reserva
+        FROM pagamento
+        ORDER BY id DESC
+        """
+    )
+
+
 @app.route("/")
 def index():
     destinos = buscar_registros(
@@ -263,15 +274,18 @@ def exportar_reservas_pdf():
 
 @app.route("/pagamentos")
 def pagamentos():
-    registros = buscar_registros(
-        """
-        SELECT id, valor_total, forma_pagamento, quantidade_parcelas,
-               valor_parcela, data_pagamento, status, id_reserva
-        FROM pagamento
-        ORDER BY id DESC
-        """
+    return render_template("pagamentos.html", pagamentos=buscar_pagamentos())
+
+
+@app.route("/pagamentos/exportar-pdf")
+def exportar_pagamentos_pdf():
+    arquivo_pdf = criar_pdf_pagamentos(buscar_pagamentos())
+    return send_file(
+        arquivo_pdf,
+        mimetype="application/pdf",
+        as_attachment=True,
+        download_name="relatorio-pagamentos.pdf",
     )
-    return render_template("pagamentos.html", pagamentos=registros)
 
 
 @app.route("/area-funcionario")

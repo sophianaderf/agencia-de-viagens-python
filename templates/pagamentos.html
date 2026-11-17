@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="card">
-    <h2>Registro de Pagamentos</h2>
+    <div class="page-heading">
+        <h2>Registro de Pagamentos</h2>
+        <a class="export-button" href="{{ url_for('exportar_pagamentos_pdf') }}">
+            Exportar relatório PDF
+        </a>
+    </div>
     <div class="table-container">
         <table>
             <thead>
@@ -33,6 +38,11 @@
                     </td>
                 </tr>
                 {% endfor %}
+                {% if not pagamentos %}
+                <tr>
+                    <td class="table-empty" colspan="8">Nenhum pagamento cadastrado.</td>
+                </tr>
+                {% endif %}
             </tbody>
         </table>
     </div>

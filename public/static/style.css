@@ -563,7 +563,7 @@ body:has(.card) main.container {
     color: var(--navy);
 }
 
-.reservas-heading {
+.page-heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -571,7 +571,7 @@ body:has(.card) main.container {
     margin-bottom: 20px;
 }
 
-.reservas-heading h2 {
+.page-heading h2 {
     margin-bottom: 0;
 }
 
@@ -595,7 +595,7 @@ body:has(.card) main.container {
     background: var(--navy);
 }
 
-.reservas-empty {
+.table-empty {
     color: #526170;
     text-align: center;
 }
@@ -1065,7 +1065,7 @@ th {
 }
 
 @media (max-width: 650px) {
-    .reservas-heading {
+    .page-heading {
         align-items: stretch;
         flex-direction: column;
     }
