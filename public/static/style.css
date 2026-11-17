@@ -955,8 +955,24 @@ th {
     font-size: 12px;
 }
 
-.record-edit-form .primary-button {
+.record-edit-form .form-actions button {
     min-height: 38px;
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.form-actions .primary-button,
+.form-actions .secondary-button {
+    min-height: 38px;
+}
+
+.record-edit-form .form-actions {
+    margin-top: 2px;
 }
 
 .delete-button {
@@ -995,6 +1011,29 @@ th {
 
 .admin-form button {
     min-height: 42px;
+}
+
+.admin-form .form-actions button {
+    min-height: 42px;
+}
+
+.status-form {
+    display: grid;
+    gap: 6px;
+}
+
+.status-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.status-actions[hidden] {
+    display: none;
+}
+
+.status-actions button {
+    min-height: 32px;
+    padding: 6px 8px;
 }
 
 .admin-search {

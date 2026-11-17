@@ -21,7 +21,10 @@
             <input name="email" type="email" required placeholder="E-mail">
             <input name="telefone" required placeholder="Telefone">
             <input name="data_de_nascimento" type="date" required>
-            <button class="primary-button" type="submit">Cadastrar cliente</button>
+            <div class="form-actions">
+                <button class="primary-button" type="submit">Cadastrar cliente</button>
+                <button class="secondary-button" type="button" onclick="cancelarCadastro(this)">Cancelar</button>
+            </div>
         </form>
         <input class="admin-search" type="search" placeholder="Pesquisar clientes..." aria-label="Pesquisar clientes">
         <div class="admin-table">
@@ -42,7 +45,10 @@
                                     <input name="email" type="email" value="{{ item.email }}" required placeholder="E-mail" aria-label="E-mail">
                                     <input name="telefone" value="{{ item.telefone }}" required placeholder="Telefone" aria-label="Telefone">
                                     <input name="data_de_nascimento" type="date" value="{{ item.data_de_nascimento.strftime('%Y-%m-%d') }}" required aria-label="Data de nascimento">
-                                    <button class="primary-button" type="submit">Salvar alterações</button>
+                                    <div class="form-actions">
+                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                        <button class="secondary-button" type="button" onclick="cancelarEdicao(this)">Cancelar</button>
+                                    </div>
                                     </form>
                                 </details>
                                 <form method="post" action="{{ url_for('deletar_item', tabela='cliente', item_id=item.id) }}" onsubmit="return confirm('Excluir este cliente?');">
@@ -67,7 +73,10 @@
             <input name="estado" required placeholder="Estado">
             <input name="pais" required placeholder="País">
             <input name="descricao" required placeholder="Descrição do destino">
-            <button class="primary-button" type="submit">Cadastrar destino</button>
+            <div class="form-actions">
+                <button class="primary-button" type="submit">Cadastrar destino</button>
+                <button class="secondary-button" type="button" onclick="cancelarCadastro(this)">Cancelar</button>
+            </div>
         </form>
         <input class="admin-search" type="search" placeholder="Pesquisar destinos..." aria-label="Pesquisar destinos">
         <div class="admin-table">
@@ -85,7 +94,10 @@
                                         <input name="estado" value="{{ item.estado }}" required placeholder="Estado">
                                         <input name="pais" value="{{ item.pais }}" required placeholder="País">
                                         <input name="descricao" value="{{ item.descricao }}" required placeholder="Descrição">
-                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                        <div class="form-actions">
+                                            <button class="primary-button" type="submit">Salvar alterações</button>
+                                            <button class="secondary-button" type="button" onclick="cancelarEdicao(this)">Cancelar</button>
+                                        </div>
                                     </form>
                                 </details>
                                 <form method="post" action="{{ url_for('deletar_item', tabela='destino', item_id=item.id) }}" onsubmit="return confirm('Excluir este destino?');"><button class="delete-button" type="submit">Excluir</button></form>
@@ -111,7 +123,10 @@
                 <option value="">Selecione o destino</option>
                 {% for destino in destinos_opcoes %}<option value="{{ destino.id }}">{{ destino.cidade }}</option>{% endfor %}
             </select>
-            <button class="primary-button" type="submit">Cadastrar hotel</button>
+            <div class="form-actions">
+                <button class="primary-button" type="submit">Cadastrar hotel</button>
+                <button class="secondary-button" type="button" onclick="cancelarCadastro(this)">Cancelar</button>
+            </div>
         </form>
         <input class="admin-search" type="search" placeholder="Pesquisar hotéis..." aria-label="Pesquisar hotéis">
         <div class="admin-table">
@@ -130,7 +145,10 @@
                                             <option value="">Selecione o destino</option>
                                             {% for destino in destinos_opcoes %}<option value="{{ destino.id }}" {% if destino.id == item.id_destino %}selected{% endif %}>{{ destino.cidade }}</option>{% endfor %}
                                         </select>
-                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                        <div class="form-actions">
+                                            <button class="primary-button" type="submit">Salvar alterações</button>
+                                            <button class="secondary-button" type="button" onclick="cancelarEdicao(this)">Cancelar</button>
+                                        </div>
                                     </form>
                                 </details>
                                 <form method="post" action="{{ url_for('deletar_item', tabela='hotel', item_id=item.id) }}" onsubmit="return confirm('Excluir este hotel?');"><button class="delete-button" type="submit">Excluir</button></form>
@@ -155,7 +173,10 @@
                 <option value="">Selecione o destino</option>
                 {% for destino in destinos_opcoes %}<option value="{{ destino.id }}">{{ destino.cidade }}</option>{% endfor %}
             </select>
-            <button class="primary-button" type="submit">Cadastrar pacote</button>
+            <div class="form-actions">
+                <button class="primary-button" type="submit">Cadastrar pacote</button>
+                <button class="secondary-button" type="button" onclick="cancelarCadastro(this)">Cancelar</button>
+            </div>
         </form>
         <input class="admin-search" type="search" placeholder="Pesquisar pacotes..." aria-label="Pesquisar pacotes">
         <div class="admin-table">
@@ -175,7 +196,10 @@
                                             <option value="">Selecione o destino</option>
                                             {% for destino in destinos_opcoes %}<option value="{{ destino.id }}" {% if destino.id == item.id_destino %}selected{% endif %}>{{ destino.cidade }}</option>{% endfor %}
                                         </select>
-                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                        <div class="form-actions">
+                                            <button class="primary-button" type="submit">Salvar alterações</button>
+                                            <button class="secondary-button" type="button" onclick="cancelarEdicao(this)">Cancelar</button>
+                                        </div>
                                     </form>
                                 </details>
                                 <form method="post" action="{{ url_for('deletar_item', tabela='pacote', item_id=item.id) }}" onsubmit="return confirm('Excluir este pacote?');"><button class="delete-button" type="submit">Excluir</button></form>
@@ -197,7 +221,10 @@
             <select name="id_cliente" required><option value="">Cliente</option>{% for cliente in clientes_opcoes %}<option value="{{ cliente.id }}">{{ cliente.nome }}</option>{% endfor %}</select>
             <select name="id_pacote" required><option value="">Pacote</option>{% for pacote in pacotes_opcoes %}<option value="{{ pacote.id }}">{{ pacote.nome_pacote }}</option>{% endfor %}</select>
             <select name="id_funcionario" required><option value="">Funcionário responsável</option>{% for funcionario in funcionarios_opcoes %}<option value="{{ funcionario.id }}">{{ funcionario.nome }}</option>{% endfor %}</select>
-            <button class="primary-button" type="submit">Realizar reserva</button>
+            <div class="form-actions">
+                <button class="primary-button" type="submit">Realizar reserva</button>
+                <button class="secondary-button" type="button" onclick="cancelarCadastro(this)">Cancelar</button>
+            </div>
         </form>
         <input class="admin-search" type="search" placeholder="Pesquisar reservas..." aria-label="Pesquisar reservas">
         <div class="admin-table">
@@ -220,7 +247,10 @@
                                         <select name="id_funcionario" required>
                                             {% for funcionario in funcionarios_opcoes %}<option value="{{ funcionario.id }}" {% if funcionario.id == item.id_funcionario %}selected{% endif %}>{{ funcionario.nome }}</option>{% endfor %}
                                         </select>
-                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                        <div class="form-actions">
+                                            <button class="primary-button" type="submit">Salvar alterações</button>
+                                            <button class="secondary-button" type="button" onclick="cancelarEdicao(this)">Cancelar</button>
+                                        </div>
                                     </form>
                                 </details>
                                 <form method="post" action="{{ url_for('deletar_item', tabela='reserva', item_id=item.id) }}" onsubmit="return confirm('Excluir esta reserva?');"><button class="delete-button" type="submit">Excluir</button></form>
@@ -243,7 +273,10 @@
             <input name="quantidade_parcelas" type="number" min="1" required placeholder="Parcelas">
             <input name="data_pagamento" type="date" required>
             <select name="status" required><option>Pendente</option><option>Pago</option><option>Cancelado</option></select>
-            <button class="primary-button" type="submit">Registrar pagamento</button>
+            <div class="form-actions">
+                <button class="primary-button" type="submit">Registrar pagamento</button>
+                <button class="secondary-button" type="button" onclick="cancelarCadastro(this)">Cancelar</button>
+            </div>
         </form>
         <input class="admin-search" type="search" placeholder="Pesquisar pagamentos..." aria-label="Pesquisar pagamentos">
         <div class="admin-table">
@@ -252,11 +285,15 @@
                     <tr data-search-row><td>{{ item.id }}</td><td>#{{ item.id_reserva }}</td><td>R$ {{ item.valor_total }}</td><td>{{ item.forma_pagamento }}</td>
                         <td>
                             <form class="status-form" method="post" action="{{ url_for('atualizar_status_pagamento', item_id=item.id) }}">
-                                <select name="status" onchange="this.form.submit()">
+                                <select name="status">
                                     <option {% if item.status == 'Pendente' %}selected{% endif %}>Pendente</option>
                                     <option {% if item.status == 'Pago' %}selected{% endif %}>Pago</option>
                                     <option {% if item.status == 'Cancelado' %}selected{% endif %}>Cancelado</option>
                                 </select>
+                                <div class="status-actions" hidden>
+                                    <button class="primary-button" type="submit">Salvar</button>
+                                    <button class="secondary-button" type="reset">Cancelar</button>
+                                </div>
                             </form>
                         </td>
                         <td class="record-actions-cell">
@@ -276,7 +313,10 @@
                                         <select name="status" required>
                                             {% for status in ['Pendente', 'Pago', 'Cancelado'] %}<option {% if status == item.status %}selected{% endif %}>{{ status }}</option>{% endfor %}
                                         </select>
-                                        <button class="primary-button" type="submit">Salvar alterações</button>
+                                        <div class="form-actions">
+                                            <button class="primary-button" type="submit">Salvar alterações</button>
+                                            <button class="secondary-button" type="button" onclick="cancelarEdicao(this)">Cancelar</button>
+                                        </div>
                                     </form>
                                 </details>
                                 <form method="post" action="{{ url_for('deletar_item', tabela='pagamento', item_id=item.id) }}" onsubmit="return confirm('Excluir este pagamento?');"><button class="delete-button" type="submit">Excluir</button></form>
@@ -294,6 +334,34 @@ function abrirCadastro(id) {
     form.classList.toggle('hidden-form');
     if (!form.classList.contains('hidden-form')) form.querySelector('input, select')?.focus();
 }
+
+function cancelarCadastro(botao) {
+    const form = botao.closest('.admin-form');
+    form.reset();
+    form.classList.add('hidden-form');
+    form.closest('.admin-section').querySelector('.admin-section-heading button').focus();
+}
+
+function cancelarEdicao(botao) {
+    const form = botao.closest('.record-edit-form');
+    const detalhes = form.closest('details');
+    form.reset();
+    detalhes.open = false;
+    detalhes.querySelector('summary').focus();
+}
+
+document.querySelectorAll('.status-form').forEach(form => {
+    const selecao = form.querySelector('select');
+    const acoes = form.querySelector('.status-actions');
+    const valorInicial = selecao.value;
+
+    selecao.addEventListener('change', () => {
+        acoes.hidden = selecao.value === valorInicial;
+    });
+    form.addEventListener('reset', () => {
+        acoes.hidden = true;
+    });
+});
 
 document.querySelectorAll('[data-searchable-section]').forEach(section => {
     const search = section.querySelector('.admin-search');
