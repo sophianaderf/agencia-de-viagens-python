@@ -563,6 +563,43 @@ body:has(.card) main.container {
     color: var(--navy);
 }
 
+.reservas-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.reservas-heading h2 {
+    margin-bottom: 0;
+}
+
+.export-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 16px;
+    border-radius: 4px;
+    color: var(--white);
+    background: var(--red);
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+}
+
+.export-button:hover,
+.export-button:focus-visible {
+    background: var(--navy);
+}
+
+.reservas-empty {
+    color: #526170;
+    text-align: center;
+}
+
 .package-search {
     display: flex;
     align-items: center;
@@ -1028,6 +1065,15 @@ th {
 }
 
 @media (max-width: 650px) {
+    .reservas-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .export-button {
+        align-self: flex-start;
+    }
+
     .package-search {
         flex-wrap: wrap;
     }

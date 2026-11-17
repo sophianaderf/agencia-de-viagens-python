@@ -2,10 +2,20 @@ import hmac
 import os
 import unicodedata
 
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import (
+    Flask,
+    flash,
+    redirect,
+    render_template,
+    request,
+    send_file,
+    session,
+    url_for,
+)
 import psycopg
 from psycopg.rows import dict_row
 
+from create_pdf import criar_pdf
 from database import criar_conexao
 
 app = Flask(
@@ -119,6 +129,21 @@ def buscar_opcoes_funcionario():
     }
 
 
+def buscar_reservas():
+    return buscar_registros(
+        """
+        SELECT r.id, r.data_reserva, r.quantidade_pessoas,
+               c.nome AS cliente_nome, p.nome_pacote,
+               f.nome AS func_nome
+        FROM reserva r
+        JOIN cliente c ON r.id_cliente = c.id
+        JOIN pacote p ON r.id_pacote = p.id
+        JOIN funcionario f ON r.id_funcionario = f.id
+        ORDER BY r.id DESC
+        """
+    )
+
+
 @app.route("/")
 def index():
     destinos = buscar_registros(
@@ -222,19 +247,18 @@ def pacotes():
 
 @app.route("/reservas")
 def reservas():
-    registros = buscar_registros(
-        """
-        SELECT r.id, r.data_reserva, r.quantidade_pessoas,
-               c.nome AS cliente_nome, p.nome_pacote,
-               f.nome AS func_nome
-        FROM reserva r
-        JOIN cliente c ON r.id_cliente = c.id
-        JOIN pacote p ON r.id_pacote = p.id
-        JOIN funcionario f ON r.id_funcionario = f.id
-        ORDER BY r.id DESC
-        """
+    return render_template("reservas.html", reservas=buscar_reservas())
+
+
+@app.route("/reservas/exportar-pdf")
+def exportar_reservas_pdf():
+    arquivo_pdf = criar_pdf(buscar_reservas())
+    return send_file(
+        arquivo_pdf,
+        mimetype="application/pdf",
+        as_attachment=True,
+        download_name="relatorio-reservas.pdf",
     )
-    return render_template("reservas.html", reservas=registros)
 
 
 @app.route("/pagamentos")
