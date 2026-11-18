@@ -10,7 +10,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossorigin="anonymous"
     >
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=8) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=9) }}">
 </head>
 <body class="login-body">
     {% with mensagens = get_flashed_messages(with_categories=true) %}
@@ -47,6 +47,7 @@
             </form>
         </section>
     </main>
+    <footer class="site-footer">Desenvolvimento de Sistemas - 2026</footer>
 
     <script>
         document.querySelectorAll('.mensagens-flash .mensagem').forEach((mensagem) => {

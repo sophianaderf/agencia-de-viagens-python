@@ -10,7 +10,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
         crossorigin="anonymous"
     >
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=12) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=13) }}">
 </head>
 <body class="{{ 'admin-body' if request.endpoint == 'area_funcionario' else '' }}">
     <header class="site-header">
@@ -55,6 +55,7 @@
         {% endwith %}
         {% block content %}{% endblock %}
     </main>
+    <footer class="site-footer">Desenvolvimento de Sistemas - 2026</footer>
     <script>
         const menuButton = document.querySelector('.menu-button');
         const menu = document.querySelector('.menu-navegacao');

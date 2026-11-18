@@ -20,10 +20,23 @@ html {
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     min-width: 320px;
     font-family: 'Montserrat', sans-serif;
     color: var(--white);
     background: var(--navy);
+}
+
+.site-footer {
+    flex: 0 0 auto;
+    padding: 18px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.72);
+    background: var(--navy);
+    font-size: 11px;
+    text-align: center;
 }
 
 a {
@@ -102,6 +115,7 @@ a {
 }
 
 .app-container {
+    flex: 1 0 auto;
     width: 100%;
 }
 
@@ -718,7 +732,7 @@ th {
 }
 
 .login-page {
-    min-height: 100vh;
+    flex: 1 0 auto;
     display: grid;
     place-items: center;
     padding: 24px;

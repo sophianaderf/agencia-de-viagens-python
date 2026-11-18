@@ -99,6 +99,8 @@ Componentes Bootstrap aplicados:
 
 O menu e os demais estilos específicos continuam usando o CSS e o JavaScript existentes; o JavaScript do Bootstrap não é necessário para esses componentes.
 
+Todas as páginas, incluindo a tela de login, exibem o rodapé “Desenvolvimento de Sistemas - 2026”.
+
 ## Modelo Lógico
 ![](agencia_viagens.png)
 
