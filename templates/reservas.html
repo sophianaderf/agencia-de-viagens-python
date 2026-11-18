@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card">
+<div class="content-card">
     <div class="page-heading">
         <h2>Reservas de Viagem</h2>
         <a class="export-button" href="{{ url_for('exportar_reservas_pdf') }}">
             Exportar relatório PDF
         </a>
     </div>
-    <div class="table-container">
-        <table>
+    <div class="table-container table-responsive">
+        <table class="table table-striped table-hover align-middle">
             <thead>
                 <tr>
                     <th>ID</th>

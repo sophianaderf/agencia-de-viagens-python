@@ -83,10 +83,21 @@ RNF04- Organização do código - O sistema deve utilizar funções e módulos p
 ## Restrições do Projeto
 
 RT01- Linguagem de programação - O sistema deve ser desenvolvido utilizando obrigatoriamente a linguagem de programação Python.
-
 RT02- Banco de dados - A aplicação web utiliza PostgreSQL para armazenamento persistente e pode ser conectada ao Neon. O menu de linha de comando (`main.py`) continua utilizando o banco SQLite local.
-
 RT03- Bibliotecas e tecnologias - A aplicação web utiliza Flask e Psycopg; o menu de linha de comando utiliza a biblioteca SQLite da linguagem Python.
+
+## Framework CSS
+
+A interface web utiliza Bootstrap 5.3.3, carregado por CDN nos templates base e de login. O CSS próprio permanece carregado depois do framework para manter a identidade visual do projeto.
+
+Componentes Bootstrap aplicados:
+
+- `form-control` nos campos de login e na busca de pacotes;
+- `btn btn-primary` nos botões de login e busca;
+- `table`, `table-striped`, `table-hover` e `align-middle` nas tabelas de pacotes, reservas, pagamentos e funcionários, dentro de contêineres `table-responsive`;
+- `alert` com `alert-success` ou `alert-danger` para mensagens de sucesso e erro.
+
+O menu e os demais estilos específicos continuam usando o CSS e o JavaScript existentes; o JavaScript do Bootstrap não é necessário para esses componentes.
 
 ## Modelo Lógico
 ![](agencia_viagens.png)
